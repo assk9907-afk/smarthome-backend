@@ -1,0 +1,5331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>Smart Home</title>
+
+<style>
+
+/* ================= BASIC ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+}
+
+body{
+    background:#eef3f8;
+    color:#102448;
+}
+
+.app{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    margin:auto;
+    background:#f7f9fc;
+    padding-bottom:68px;
+    overflow:hidden;
+}
+
+
+/* ================= HEADER ================= */
+
+.header{
+    height:285px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        rgba(0,58,125,.70),
+        rgba(0,40,85,.65)
+    ),
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=90");
+
+    background-size:cover;
+
+    background-position:center;
+}
+
+
+/* ================= TOP ================= */
+
+.topbar{
+    height:50px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:7px 10px;
+}
+
+.menu{
+    font-size:20px;
+}
+
+.top-icons{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.bell{
+    font-size:16px;
+
+    position:relative;
+}
+
+.notification{
+    width:8px;
+    height:8px;
+
+    background:#ff3045;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    right:-2px;
+    top:-2px;
+}
+
+.profile{
+    width:33px;
+    height:39px;
+
+    background:#1677f5;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:21px;
+}
+
+
+/* ================= WELCOME ================= */
+
+.welcome{
+    padding:7px 20px;
+}
+
+.welcome h1{
+    font-size:27px;
+
+    line-height:1.1;
+}
+
+.welcome p{
+    margin-top:5px;
+
+    font-size:14px;
+}
+
+
+/* ================= WEATHER ================= */
+
+.weather{
+
+    position:absolute;
+
+    left:15px;
+    right:15px;
+
+    bottom:14px;
+
+    height:78px;
+
+    border-radius:16px;
+
+    background:rgba(45,55,65,.65);
+
+    border:1px solid rgba(255,255,255,.28);
+
+    backdrop-filter:blur(8px);
+
+    display:flex;
+
+    align-items:center;
+
+    padding:8px 12px;
+}
+
+.weather-left{
+
+    width:52%;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+}
+
+.weather-icon{
+    font-size:31px;
+}
+
+.temp{
+    font-size:22px;
+
+    font-weight:bold;
+}
+
+.weather-text{
+    font-size:10px;
+
+    margin-top:2px;
+}
+
+.weather-right{
+
+    width:48%;
+
+    border-left:1px solid
+    rgba(255,255,255,.5);
+
+    padding-left:10px;
+}
+
+.date{
+    font-size:11px;
+
+    white-space:nowrap;
+}
+
+.clock{
+    font-size:19px;
+
+    font-weight:bold;
+
+    margin-top:6px;
+
+    white-space:nowrap;
+}
+
+
+/* ================= ROOMS ================= */
+
+.room-area{
+    background:#f7f9fc;
+
+    padding-top:9px;
+}
+
+
+/*
+   ৬টা ROOM এক লাইনে
+*/
+
+.rooms{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(6,1fr);
+
+    gap:5px;
+
+    padding:0 8px 10px;
+
+    overflow:hidden;
+}
+
+.room{
+
+    width:100%;
+
+    height:67px;
+
+    min-width:0;
+
+    background:white;
+
+    border-radius:13px;
+
+    box-shadow:
+    0 3px 9px
+    rgba(0,0,0,.07);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    font-size:7px;
+
+    font-weight:500;
+}
+
+.room-icon{
+
+    font-size:21px;
+
+    margin-bottom:3px;
+}
+
+.room.active{
+
+    background:#2d82f4;
+
+    color:white;
+}
+
+
+/* ================= DEVICES TITLE ================= */
+
+.title-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:3px 15px 8px;
+}
+
+.title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    font-size:20px;
+
+    font-weight:bold;
+}
+
+.grid-icon{
+
+    color:#1678f3;
+
+    font-size:20px;
+}
+
+.see-all{
+
+    font-size:10px;
+
+    color:#526987;
+}
+
+
+/* ================= DEVICES ================= */
+
+.devices{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,minmax(0,1fr));
+
+    gap:1px;
+
+    padding:0 1px;
+}
+
+.device{
+
+    width:100%;
+
+    height:83px;
+
+    min-width:0;
+
+    border-radius:16px;
+
+    padding:9px;
+
+    position:relative;
+
+    box-shadow:
+    0 3px 10px
+    rgba(30,60,100,.08);
+}
+
+
+/* DEVICE COLORS */
+
+.device:nth-child(1){
+    background:#e1f3ff;
+}
+
+.device:nth-child(2){
+    background:#e7fae8;
+}
+
+.device:nth-child(3){
+    background:#fff0f0;
+}
+
+.device:nth-child(4){
+    background:#f0edff;
+}
+
+.device:nth-child(5){
+    background:#fff8e9;
+}
+
+.device:nth-child(6){
+    background:#e1f9ff;
+}
+
+
+/* DEVICE IMAGE */
+
+.device-image{
+
+    height:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:39px;
+}
+
+.device-name{
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+.device-room{
+
+    font-size:9px;
+
+    color:#60738b;
+
+    margin-top:2px;
+}
+
+
+/* ARROW */
+
+.arrow{
+
+    position:absolute;
+
+    top:9px;
+
+    right:8px;
+
+    font-size:17px;
+
+    color:#3d526c;
+}
+
+
+/* ================= SWITCH ================= */
+
+.switch{
+
+    position:absolute;
+
+    right:7px;
+
+    bottom:7px;
+
+    width:39px;
+
+    height:21px;
+
+    background:#aeb6c1;
+
+    border-radius:20px;
+
+    cursor:pointer;
+}
+
+.switch::after{
+
+    content:"";
+
+    width:15px;
+
+    height:15px;
+
+    background:white;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    left:3px;
+
+    top:3px;
+
+    transition:.2s;
+}
+
+.switch.on{
+
+    background:#1978f5;
+}
+
+.switch.on::after{
+
+    left:21px;
+}
+
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    padding:15px 15px 8px;
+}
+
+.quick-title span{
+
+    color:#1978f5;
+
+    font-size:23px;
+}
+
+
+/*
+   ৪টা Quick Action এক লাইনে
+*/
+
+.quick{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,minmax(0,1fr));
+
+    gap:7px;
+
+    padding:0 9px;
+}
+
+.quick-card{
+
+    width:100%;
+
+    height:91px;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 3px 9px
+    rgba(0,0,0,.07);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+}
+
+.quick-icon{
+
+    width:35px;
+
+    height:35px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:17px;
+
+    margin-bottom:5px;
+}
+
+.quick-card:nth-child(1)
+.quick-icon{
+    background:#27bf68;
+}
+
+.quick-card:nth-child(2)
+.quick-icon{
+    background:#a53df1;
+}
+
+.quick-card:nth-child(3)
+.quick-icon{
+    background:#ff4e63;
+}
+
+.quick-card:nth-child(4)
+.quick-icon{
+    background:#ff9d21;
+}
+
+.quick-name{
+
+    font-size:10px;
+
+    font-weight:bold;
+}
+
+.quick-text{
+
+    font-size:7px;
+
+    color:#61728b;
+
+    margin-top:2px;
+}
+
+
+/* ================= BOTTOM NAV ================= */
+
+.bottom{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:100%;
+
+    max-width:430px;
+
+    height:63px;
+
+    background:white;
+
+    box-shadow:
+    0 -3px 15px
+    rgba(0,0,0,.10);
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(5,1fr);
+
+    z-index:100;
+}
+
+.nav{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#435674;
+
+    font-size:8px;
+}
+
+.nav-icon{
+
+    font-size:19px;
+
+    margin-bottom:2px;
+}
+
+.nav.active{
+
+    color:white;
+
+    background:#2c82f4;
+
+    border-radius:14px;
+
+    margin:5px 3px;
+}
+
+
+/* ADD BUTTON */
+
+.add{
+
+    width:47px;
+
+    height:47px;
+
+    background:#1478f5;
+
+    border-radius:50%;
+
+    color:white;
+
+    font-size:30px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    margin-top:-22px;
+
+    border:4px solid #f7f9fc;
+}
+
+
+/* ================= SMALL PHONE ================= */
+
+@media(max-width:360px){
+
+    .header{
+        height:275px;
+    }
+
+    .welcome h1{
+        font-size:24px;
+    }
+
+    .welcome p{
+        font-size:12px;
+    }
+
+    .room{
+        height:61px;
+        font-size:6.5px;
+    }
+
+    .room-icon{
+        font-size:19px;
+    }
+
+    .device{
+        height:125px;
+        padding:8px;
+    }
+
+    .device-image{
+        height:49px;
+        font-size:34px;
+    }
+
+    .device-name{
+        font-size:11px;
+    }
+
+    .device-room{
+        font-size:8px;
+    }
+
+    .quick-card{
+        height:84px;
+    }
+
+    .quick-icon{
+        width:32px;
+        height:32px;
+        font-size:15px;
+    }
+
+    .quick-name{
+        font-size:8px;
+    }
+
+    .quick-text{
+        font-size:6px;
+    }
+
+}
+
+
+/* ================= VERY SMALL PHONE ================= */
+
+@media(max-width:320px){
+
+    .rooms{
+        gap:3px;
+        padding-left:5px;
+        padding-right:5px;
+    }
+
+    .room{
+        height:55px;
+        border-radius:9px;
+    }
+
+    .room-icon{
+        font-size:17px;
+    }
+
+    .devices{
+        gap:5px;
+        padding-left:6px;
+        padding-right:6px;
+    }
+
+    .device{
+        height:115px;
+        border-radius:12px;
+        padding:6px;
+    }
+
+    .device-image{
+        height:43px;
+        font-size:29px;
+    }
+
+    .device-name{
+        font-size:10px;
+    }
+
+    .device-room{
+        font-size:7px;
+    }
+
+    .quick{
+        gap:4px;
+        padding-left:6px;
+        padding-right:6px;
+    }
+
+    .quick-card{
+        height:78px;
+    }
+
+}
+
+
+/* ================= LIGHT MANAGEMENT ================= */
+
+.light-modal{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    background:rgba(5,25,55,.50);
+    backdrop-filter:blur(4px);
+}
+.light-modal.show{display:flex}
+
+.light-panel{
+    width:100%;
+    max-width:430px;
+    max-height:88vh;
+    overflow:auto;
+    background:#f7f9fc;
+    border-radius:24px 24px 0 0;
+    padding:18px 15px 25px;
+    box-shadow:0 -8px 30px rgba(0,0,0,.20);
+}
+
+.light-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+.light-head h2{
+    font-size:20px;
+    color:#102448;
+}
+.light-close{
+    width:32px;
+    height:32px;
+    border:0;
+    border-radius:50%;
+    background:#e8eef6;
+    color:#263b59;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.light-summary{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-bottom:10px;
+}
+.light-stat{
+    background:white;
+    border-radius:12px;
+    padding:9px 4px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.light-stat-number{
+    color:#1978f5;
+    font-size:20px;
+    font-weight:800;
+}
+.light-stat-label{
+    color:#61728b;
+    font-size:8px;
+    margin-top:2px;
+}
+
+.light-add-box{
+    padding:11px;
+    background:white;
+    border-radius:13px;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+    margin-bottom:10px;
+}
+.light-label{
+    display:block;
+    margin:7px 0 4px;
+    color:#526987;
+    font-size:9px;
+    font-weight:700;
+}
+.light-input,.light-select{
+    width:100%;
+    height:39px;
+    border:1px solid #d9e2ef;
+    border-radius:10px;
+    padding:0 10px;
+    background:#fff;
+    color:#102448;
+    font-size:11px;
+    outline:none;
+}
+.light-primary{
+    width:100%;
+    height:40px;
+    margin-top:8px;
+    border:0;
+    border-radius:10px;
+    background:#1978f5;
+    color:white;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.light-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:7px;
+}
+.light-card{
+    position:relative;
+    min-height:88px;
+    padding:9px;
+    border-radius:13px;
+    background:#eaf5ff;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.light-card-icon{
+    font-size:24px;
+}
+.light-card-name{
+    margin-top:3px;
+    font-size:10px;
+    font-weight:700;
+}
+.light-card-room{
+    margin-top:2px;
+    color:#60738b;
+    font-size:8px;
+}
+.light-card-delete{
+    position:absolute;
+    right:6px;
+    top:6px;
+    width:22px;
+    height:22px;
+    border:0;
+    border-radius:7px;
+    background:#fff0f1;
+    color:#e33a4d;
+    cursor:pointer;
+    font-size:12px;
+}
+.light-switch{
+    position:absolute;
+    right:7px;
+    bottom:7px;
+    width:34px;
+    height:19px;
+    border:0;
+    border-radius:20px;
+    background:#aeb6c1;
+    cursor:pointer;
+}
+.light-switch::after{
+    content:"";
+    position:absolute;
+    width:13px;
+    height:13px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
+.light-switch.on{background:#1978f5}
+.light-switch.on::after{left:18px}
+.light-empty{
+    grid-column:1/-1;
+    padding:14px;
+    text-align:center;
+    border-radius:12px;
+    background:#eef6ff;
+    color:#526987;
+    font-size:10px;
+}
+
+
+/* ================= REFERRAL SYSTEM ================= */
+
+.referral-modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,20,45,.50);
+  backdrop-filter:blur(3px);
+}
+.referral-modal.show{display:flex}
+
+.referral-panel{
+  width:100%;
+  max-width:430px;
+  max-height:90vh;
+  overflow:auto;
+  background:#f7f9fc;
+  border-radius:24px 24px 0 0;
+  padding:18px 16px 24px;
+  box-shadow:0 -8px 30px rgba(0,0,0,.18);
+}
+
+.referral-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.referral-head h2{
+  font-size:20px;
+  color:#102448;
+}
+
+.referral-close{
+  width:32px;
+  height:32px;
+  border:0;
+  border-radius:50%;
+  background:#e8eef6;
+  color:#263b59;
+  font-size:19px;
+  cursor:pointer;
+}
+
+.referral-card{
+  background:linear-gradient(135deg,#1978f5,#5d9fff);
+  color:#fff;
+  border-radius:17px;
+  padding:15px;
+  text-align:center;
+}
+
+.referral-card h3{
+  font-size:18px;
+}
+
+.referral-card p{
+  margin-top:5px;
+  font-size:10px;
+  opacity:.92;
+}
+
+.referral-code{
+  margin:12px 0 8px;
+  padding:10px;
+  border-radius:11px;
+  background:rgba(255,255,255,.18);
+  border:1px dashed rgba(255,255,255,.75);
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:3px;
+}
+
+.referral-link{
+  width:100%;
+  height:40px;
+  margin-top:10px;
+  padding:0 9px;
+  border:1px solid #d8e2ee;
+  border-radius:10px;
+  background:#fff;
+  color:#526987;
+  font-size:9px;
+  outline:0;
+}
+
+.referral-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:9px;
+}
+
+.ref-btn{
+  height:41px;
+  border:0;
+  border-radius:11px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.ref-btn.primary{
+  background:#1978f5;
+  color:#fff;
+}
+
+.ref-btn.secondary{
+  background:#e8eef6;
+  color:#314864;
+}
+
+.ref-btn.green{
+  background:#19a957;
+  color:#fff;
+}
+
+.ref-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:10px;
+}
+
+.ref-stat{
+  background:#fff;
+  border-radius:12px;
+  padding:9px 4px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.ref-stat strong{
+  display:block;
+  color:#1978f5;
+  font-size:18px;
+}
+
+.ref-stat span{
+  color:#61728b;
+  font-size:8px;
+}
+
+.ref-info{
+  margin-top:10px;
+  padding:10px;
+  border-radius:11px;
+  background:#eef6ff;
+  color:#42617f;
+  font-size:9px;
+  line-height:1.45;
+}
+
+
+
+/* ADD MENU */
+.add-menu{position:fixed;inset:0;background:#f7f9fc;display:none;align-items:flex-start;justify-content:center;z-index:5000;overflow-y:auto}
+.add-menu.show{display:flex}
+.add-sheet{width:min(430px,100%);min-height:100vh;background:#f7f9fc;padding:20px 16px 90px;box-shadow:none;animation:addUp .2s ease}
+@keyframes addUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.add-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.add-head h3{margin:0;font-size:19px;color:#102448}
+.add-close{width:34px;height:34px;border:0;border-radius:50%;background:#eef3f9;font-size:20px;cursor:pointer}
+.add-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.add-option{border:1px solid #e3eaf3;background:#f8fbff;border-radius:17px;padding:15px 12px;text-align:left;cursor:pointer;transition:.15s}
+.add-option:active{transform:scale(.97)}
+.add-option .ico{font-size:27px;margin-bottom:8px}
+.add-option b{display:block;color:#102448;font-size:14px}
+.add-option span{display:block;color:#718096;font-size:11px;margin-top:3px}
+@media(max-width:330px){.add-sheet{padding:15px 12px 90px}.add-grid{gap:8px}.add-option{padding:12px 9px}}
+
+
+/* ================= SOCIAL SHARE ================= */
+.social-share-title{
+  margin-top:10px;
+  color:#526987;
+  font-size:10px;
+  font-weight:700;
+}
+.social-share{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:7px;
+}
+.social-btn{
+  height:42px;
+  border:0;
+  border-radius:11px;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.social-btn.whatsapp{background:#19a957}
+.social-btn.facebook{background:#1877f2}
+.social-btn:active{transform:scale(.98)}
+
+
+/* ================= ADD DEVICE + QR SCANNER ================= */
+.device-modal{
+  position:fixed; inset:0; z-index:6000; display:none;
+  align-items:flex-end; justify-content:center;
+  background:rgba(4,20,45,.55); backdrop-filter:blur(4px);
+}
+.device-modal.show{display:flex}
+.device-panel{
+  width:100%; max-width:430px; max-height:92vh; overflow:auto;
+  background:#f7f9fc; border-radius:24px 24px 0 0;
+  padding:18px 16px 28px; box-shadow:0 -8px 30px rgba(0,0,0,.20);
+}
+.device-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.device-head h2{font-size:20px;color:#102448}
+.device-close{width:34px;height:34px;border:0;border-radius:50%;background:#e8eef6;color:#263b59;font-size:20px;cursor:pointer}
+.device-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.device-tab{height:40px;border:0;border-radius:11px;background:#e8eef6;color:#425a76;font-weight:700;font-size:11px;cursor:pointer}
+.device-tab.active{background:#1978f5;color:#fff}
+.device-box{background:#fff;border-radius:15px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:9px}
+.device-label{display:block;color:#526987;font-size:9px;font-weight:700;margin:6px 0 4px}
+.device-input,.device-select{width:100%;height:40px;border:1px solid #d9e2ef;border-radius:10px;padding:0 10px;background:#fff;color:#102448;font-size:11px;outline:none}
+.device-primary{width:100%;height:42px;border:0;border-radius:11px;background:#1978f5;color:#fff;font-size:11px;font-weight:700;cursor:pointer;margin-top:9px}
+.qr-wrap{display:flex;flex-direction:column;align-items:center;padding:7px 0 4px}
+#deviceQr{width:190px;height:190px;display:flex;align-items:center;justify-content:center;background:#fff}
+#deviceQr img,#deviceQr canvas{max-width:190px;max-height:190px}
+.qr-code-text{margin-top:8px;color:#526987;font-size:10px;text-align:center;word-break:break-all}
+.scanner-wrap{background:#081a30;border-radius:14px;overflow:hidden;min-height:250px;position:relative}
+#qrScanner{width:100%;min-height:250px}
+.scanner-note{margin-top:8px;padding:9px;border-radius:10px;background:#eef6ff;color:#42617f;font-size:9px;line-height:1.45}
+.scan-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.scan-btn{height:40px;border:0;border-radius:10px;background:#e8eef6;color:#314864;font-size:10px;font-weight:700;cursor:pointer}
+.scan-btn.primary{background:#1978f5;color:#fff}
+@media(max-width:330px){
+ .device-panel{padding:15px 12px 24px}
+ .device-tab{font-size:10px}
+}
+
+
+/* ================= VOICE CONTROL ================= */
+.voice-modal{
+  position:fixed; inset:0; z-index:6500; display:none;
+  align-items:flex-end; justify-content:center;
+  background:rgba(4,20,45,.55); backdrop-filter:blur(4px);
+}
+.voice-modal.show{display:flex}
+.voice-panel{
+  width:100%; max-width:430px; max-height:88vh; overflow:auto;
+  background:#f7f9fc; border-radius:24px 24px 0 0;
+  padding:18px 16px 28px; box-shadow:0 -8px 30px rgba(0,0,0,.20);
+}
+.voice-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.voice-head h2{font-size:20px;color:#102448}
+.voice-close{width:34px;height:34px;border:0;border-radius:50%;background:#e8eef6;color:#263b59;font-size:20px;cursor:pointer}
+.voice-status{
+  background:linear-gradient(135deg,#1978f5,#5d9fff);color:#fff;border-radius:17px;
+  padding:18px;text-align:center;
+}
+.voice-mic{
+  width:68px;height:68px;border:0;border-radius:50%;background:#fff;color:#1978f5;
+  font-size:30px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+.voice-mic.listening{animation:voicePulse 1s infinite;background:#ffedf0;color:#ef3340}
+@keyframes voicePulse{50%{transform:scale(1.08);box-shadow:0 0 0 12px rgba(255,255,255,.18)}}
+.voice-text{margin-top:10px;font-size:12px;font-weight:700}
+.voice-command{margin-top:5px;font-size:10px;opacity:.92;min-height:15px}
+.voice-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.voice-btn{height:42px;border:0;border-radius:11px;font-size:11px;font-weight:700;cursor:pointer}
+.voice-btn.primary{background:#1978f5;color:#fff}
+.voice-btn.secondary{background:#e8eef6;color:#314864}
+.voice-help{margin-top:10px;padding:11px;border-radius:12px;background:#eef6ff;color:#42617f;font-size:9px;line-height:1.55}
+.voice-result{margin-top:9px;background:#fff;border-radius:13px;padding:11px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.voice-result-title{font-size:9px;color:#60738b}
+.voice-result-text{font-size:11px;font-weight:700;color:#102448;margin-top:3px;min-height:16px}
+
+
+/* ================= SCHEDULE ================= */
+.schedule-modal{
+  position:fixed; inset:0; z-index:6400; display:none;
+  align-items:flex-end; justify-content:center;
+  background:rgba(4,20,45,.55); backdrop-filter:blur(4px);
+}
+.schedule-modal.show{display:flex}
+.schedule-panel{
+  width:100%; max-width:430px; max-height:90vh; overflow:auto;
+  background:#f7f9fc; border-radius:24px 24px 0 0;
+  padding:18px 16px 28px; box-shadow:0 -8px 30px rgba(0,0,0,.20);
+}
+.schedule-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.schedule-head h2{font-size:20px;color:#102448}
+.schedule-close{width:34px;height:34px;border:0;border-radius:50%;background:#e8eef6;color:#263b59;font-size:20px;cursor:pointer}
+.schedule-box{background:#fff;border-radius:15px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.schedule-label{display:block;color:#526987;font-size:9px;font-weight:700;margin:7px 0 4px}
+.schedule-input,.schedule-select{
+  width:100%;height:40px;border:1px solid #d9e2ef;border-radius:10px;
+  padding:0 10px;background:#fff;color:#102448;font-size:11px;outline:none;
+}
+.schedule-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.schedule-btn{
+  width:100%;height:42px;border:0;border-radius:11px;background:#1978f5;color:#fff;
+  font-size:11px;font-weight:700;cursor:pointer;margin-top:10px
+}
+.schedule-list{display:grid;gap:7px;margin-top:10px}
+.schedule-item{
+  position:relative;background:#eef6ff;border-radius:12px;padding:10px 38px 10px 10px;
+  font-size:10px;color:#314864
+}
+.schedule-item b{display:block;color:#102448;font-size:11px;margin-bottom:3px}
+.schedule-delete{
+  position:absolute;right:7px;top:7px;width:25px;height:25px;border:0;border-radius:7px;
+  background:#fff0f1;color:#e33a4d;cursor:pointer
+}
+.schedule-empty{padding:12px;text-align:center;background:#f4f7fb;border-radius:11px;color:#60738b;font-size:10px}
+
+
+/* ================= TIMER ================= */
+.timer-modal{
+  position:fixed;inset:0;z-index:6450;display:none;align-items:flex-end;justify-content:center;
+  background:rgba(4,20,45,.55);backdrop-filter:blur(4px)
+}
+.timer-modal.show{display:flex}
+.timer-panel{
+  width:100%;max-width:430px;max-height:88vh;overflow:auto;background:#f7f9fc;
+  border-radius:24px 24px 0 0;padding:18px 16px 28px;box-shadow:0 -8px 30px rgba(0,0,0,.2)
+}
+.timer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.timer-head h2{font-size:20px;color:#102448}
+.timer-close{width:34px;height:34px;border:0;border-radius:50%;background:#e8eef6;color:#263b59;font-size:20px;cursor:pointer}
+.timer-box{background:#fff;border-radius:15px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.timer-label{display:block;color:#526987;font-size:9px;font-weight:700;margin:7px 0 4px}
+.timer-select,.timer-input{
+  width:100%;height:40px;border:1px solid #d9e2ef;border-radius:10px;padding:0 10px;
+  background:#fff;color:#102448;font-size:11px;outline:none
+}
+.timer-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.timer-display{
+  text-align:center;background:linear-gradient(135deg,#1978f5,#5d9fff);color:#fff;
+  border-radius:16px;padding:16px;margin-bottom:10px
+}
+.timer-display .num{font-size:34px;font-weight:800;letter-spacing:2px}
+.timer-display .state{font-size:10px;margin-top:3px}
+.timer-btn{
+  width:100%;height:42px;border:0;border-radius:11px;background:#1978f5;color:#fff;
+  font-size:11px;font-weight:700;cursor:pointer;margin-top:10px
+}
+.timer-btn.stop{background:#e9eef5;color:#304964}
+.timer-active{
+  margin-top:10px;padding:10px;border-radius:12px;background:#eef6ff;color:#314864;
+  font-size:10px;text-align:center
+}
+
+</style>
+
+<style>
+.help-modal{position:fixed;inset:0;z-index:9000;display:none;align-items:flex-end;justify-content:center;background:rgba(4,20,45,.55);backdrop-filter:blur(4px)}
+.help-modal.show{display:flex}
+.help-panel{width:100%;max-width:430px;background:#f7f9fc;border-radius:24px 24px 0 0;padding:18px 16px 30px;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.help-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.help-head h2{margin:0;color:#102448;font-size:20px}.help-close{width:34px;height:34px;border:0;border-radius:50%;background:#e8eef6;color:#263b59;font-size:20px;cursor:pointer}
+.help-card{background:#fff;border-radius:16px;padding:16px;margin-top:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.help-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #edf1f6}.help-row:last-child{border-bottom:0}.help-icon{font-size:24px;width:34px}.help-label{font-size:10px;color:#708198}.help-value{font-size:13px;font-weight:700;color:#102448;margin-top:2px;word-break:break-word}.help-value a{color:#1978f5;text-decoration:none}
+</style>
+
+<div class="help-modal" id="helpModal" onclick="closeHelpMenu(event)">
+  <div class="help-panel" onclick="event.stopPropagation()">
+    <div class="help-head">
+      <h2>❓ Customer Help</h2>
+      <button class="help-close" onclick="closeHelpMenu()">×</button>
+    </div>
+    <div class="help-card">
+      <div class="help-row"><div class="help-icon">📞</div><div><div class="help-label">Customer Helpline Number</div><div class="help-value"><a href="tel:9907139533">9907139533</a></div></div></div>
+      <div class="help-row"><div class="help-icon">💬</div><div><div class="help-label">WhatsApp Number</div><div class="help-value"><a href="https://wa.me/919907139533" target="_blank">9907139533</a></div></div></div>
+      <div class="help-row"><div class="help-icon">✉️</div><div><div class="help-label">Email</div><div class="help-value"><a href="mailto:asrafulsekhhfye@gmail.com">asrafulsekhhfye@gmail.com</a></div></div></div>
+    </div>
+  </div>
+</div>
+
+
+<style id="mobile-view-style">
+/* ===== MOBILE PHONE VIEW ===== */
+body.mobile-view{
+    background:#dfe7f1 !important;
+    overflow:hidden !important;
+}
+body.mobile-view .app{
+    width:390px !important;
+    max-width:calc(100vw - 24px) !important;
+    height:844px !important;
+    max-height:calc(100vh - 24px) !important;
+    margin:12px auto !important;
+    border-radius:34px !important;
+    overflow:hidden !important;
+    box-shadow:0 12px 45px rgba(0,0,0,.28) !important;
+    position:relative !important;
+    background:#f7f9fc !important;
+}
+body.mobile-view .header,
+body.mobile-view .room-area,
+body.mobile-view .bottom{
+    max-width:100% !important;
+}
+body.mobile-view .bottom{
+    position:absolute !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+}
+body.mobile-view .three-menu{
+    top:62px !important;
+    left:14px !important;
+}
+@media(max-width:600px){
+    body.mobile-view{
+        background:#f7f9fc !important;
+    }
+    body.mobile-view .app{
+        width:100vw !important;
+        max-width:none !important;
+        height:100vh !important;
+        max-height:none !important;
+        margin:0 !important;
+        border-radius:0 !important;
+        box-shadow:none !important;
+    }
+}
+/* A small mobile-view indicator */
+.mobile-view-badge{
+    position:fixed;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:12000;
+    display:none;
+    padding:6px 12px;
+    border-radius:20px;
+    background:#102448;
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    box-shadow:0 4px 15px rgba(0,0,0,.18);
+}
+body.mobile-view .mobile-view-badge{display:block}
+</style>
+
+
+<style id="room-shop-css">
+.room{cursor:pointer;user-select:none}
+.room:active{transform:scale(.97)}
+.room-shop-modal{
+ position:fixed;inset:0;background:rgba(10,25,50,.48);display:none;
+ align-items:flex-end;justify-content:center;z-index:9000;
+}
+.room-shop-modal.show{display:flex}
+.room-shop-panel{
+ width:min(430px,100%);max-height:92vh;overflow-y:auto;
+ background:#f6f8fc;border-radius:24px 24px 0 0;padding:18px 15px 90px;
+ box-shadow:0 -10px 35px rgba(0,0,0,.2);
+}
+.room-shop-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.room-shop-head h2{margin:0;color:#102448;font-size:19px}
+.room-shop-close{width:38px;height:38px;border:0;border-radius:50%;background:#e9eef6;font-size:23px;cursor:pointer}
+.shop-search{width:100%;height:42px;border:1px solid #dce5f0;border-radius:12px;padding:0 13px;font-size:14px;outline:none;background:#fff;margin-bottom:12px}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shop-card{background:#fff;border:1px solid #e4eaf2;border-radius:16px;padding:12px;box-shadow:0 4px 14px rgba(20,50,90,.06)}
+.shop-img{height:100px;border-radius:12px;background:#f1f5fa;display:flex;align-items:center;justify-content:center;font-size:52px;margin-bottom:9px}
+.shop-card h3{margin:0;color:#13284a;font-size:14px}
+.shop-card p{margin:5px 0;color:#718199;font-size:10px;line-height:1.35}
+.shop-price{font-size:16px;font-weight:800;color:#102448;margin:7px 0}
+.shop-actions{display:flex;gap:6px}
+.shop-btn{flex:1;height:36px;border:0;border-radius:9px;font-size:10px;font-weight:700;cursor:pointer}
+.shop-buy{background:#1978f5;color:#fff}
+.shop-cart{background:#eaf2ff;color:#1978f5}
+.cart-bar{position:sticky;bottom:8px;margin-top:14px;background:#102448;color:#fff;border-radius:14px;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;font-size:11px}
+.cart-buy{border:0;border-radius:9px;background:#fff;color:#102448;font-weight:800;padding:9px 12px;cursor:pointer}
+@media(max-width:350px){.shop-grid{grid-template-columns:1fr}.room-shop-panel{padding-left:12px;padding-right:12px}}
+</style>
+
+
+<style id="rooms-fixed-style">
+#roomsBar .room{
+    border:0;
+    font:inherit;
+    color:inherit;
+    background:#fff;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+}
+#roomsBar .room:active{transform:scale(.96)}
+</style>
+
+
+<style id="small-room-style">
+/* Small Room cards */
+#roomsBar{
+    gap:6px !important;
+    padding:2px 0 !important;
+}
+#roomsBar .room{
+    min-width:62px !important;
+    height:68px !important;
+    padding:6px 5px !important;
+    border-radius:12px !important;
+    font-size:9px !important;
+    line-height:11px !important;
+}
+#roomsBar .room-icon{
+    font-size:21px !important;
+    margin-bottom:3px !important;
+}
+@media(max-width:370px){
+    #roomsBar .room{
+        min-width:58px !important;
+        height:64px !important;
+        padding:5px 3px !important;
+        font-size:8px !important;
+    }
+    #roomsBar .room-icon{font-size:19px !important}
+}
+</style>
+
+
+<style id="buy-sell-css">
+.buy-sell-tabs{display:flex;gap:8px;margin:10px 0}
+.bs-tab{flex:1;border:0;border-radius:12px;padding:11px;font-weight:800;background:#eef3f8;color:#334155}
+.bs-tab.active{background:#2563eb;color:#fff}
+.sell-panel{background:#f8fafc;border-radius:14px;padding:12px;margin-bottom:10px}
+.sell-panel h3{margin:0 0 10px;font-size:15px}
+.sell-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sell-grid input,.sell-grid select,.sell-grid textarea{width:100%;box-sizing:border-box;border:1px solid #dbe3ec;border-radius:10px;padding:10px;font-size:12px;background:#fff}
+.sell-grid textarea{grid-column:1/-1;min-height:70px;resize:vertical}
+.sell-add-btn{width:100%;border:0;border-radius:11px;padding:11px;margin-top:9px;background:#16a34a;color:#fff;font-weight:800}
+.seller-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fff;border-radius:10px;padding:9px;margin-top:7px;font-size:12px}
+.seller-item button{border:0;border-radius:8px;padding:7px 9px;background:#fee2e2;color:#b91c1c;font-weight:700}
+@media(max-width:370px){.sell-grid{grid-template-columns:1fr}}
+</style>
+
+
+<style id="sell-3dot-css">
+#buySellTabs{display:none!important}
+.sell-panel{margin-top:8px}
+</style>
+
+<style id="final-three-menu-css">
+.three-menu{
+  position:absolute;
+  right:10px;
+  top:58px;
+  width:205px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:7px;
+  box-shadow:0 12px 35px rgba(15,23,42,.18);
+  z-index:9999;
+  display:none;
+}
+.three-menu.show{display:block}
+.three-menu button{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  border:0;
+  background:transparent;
+  padding:12px 11px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:700;
+  color:#1e293b;
+  text-align:left;
+  cursor:pointer;
+}
+.three-menu button:hover{background:#f1f5f9}
+.three-menu button span{flex:1}
+</style>
+
+<style id="room-buy-only-css">
+#buySellTabs{display:none!important}
+#sellPanel{display:none!important}
+</style>
+
+<style id="perfect-menu-fix">
+/* Final Three-Dot Menu */
+#threeMenu{
+  position:fixed !important;
+  top:78px !important;
+  right:max(12px, calc((100vw - 430px)/2 + 12px)) !important;
+  left:auto !important;
+  width:220px !important;
+  max-width:calc(100vw - 24px) !important;
+  padding:8px !important;
+  background:#fff !important;
+  border:1px solid #e7edf5 !important;
+  border-radius:18px !important;
+  box-shadow:0 14px 40px rgba(15,35,65,.20) !important;
+  z-index:30000 !important;
+}
+#threeMenu.show{display:block !important}
+#threeMenu button{
+  width:100% !important;
+  min-height:44px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:12px !important;
+  padding:10px 12px !important;
+  margin:1px 0 !important;
+  border:0 !important;
+  border-radius:11px !important;
+  background:#fff !important;
+  color:#102448 !important;
+  font:700 13px Arial,Helvetica,sans-serif !important;
+  text-align:left !important;
+  cursor:pointer !important;
+}
+#threeMenu button:hover,#threeMenu button:active{
+  background:#eef6ff !important;
+}
+#threeMenu button span{flex:1 !important}
+.three-item{display:none !important}
+
+@media(max-width:600px){
+  #threeMenu{
+    top:58px !important;
+    right:10px !important;
+    width:210px !important;
+  }
+}
+</style>
+
+
+<style id="working-notification-css">
+.bell{cursor:pointer;position:relative;user-select:none}
+.notification{
+  width:9px;height:9px;background:#ff3045;border-radius:50%;
+  position:absolute;right:-2px;top:-2px;border:2px solid rgba(255,255,255,.75);
+  display:block;
+}
+.bell.no-notification .notification{display:none}
+.notification-modal{
+  position:fixed;inset:0;z-index:35000;display:none;
+  align-items:flex-start;justify-content:center;
+  background:rgba(5,20,45,.38);backdrop-filter:blur(3px);
+}
+.notification-modal.show{display:flex}
+.notification-panel{
+  width:min(390px,calc(100vw - 24px));max-height:72vh;overflow:auto;
+  margin-top:72px;background:#f7f9fc;border-radius:20px;
+  box-shadow:0 18px 50px rgba(10,35,70,.25);padding:14px;
+}
+.notification-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:9px;
+}
+.notification-head h2{margin:0;font-size:18px;color:#102448}
+.notification-close{
+  width:32px;height:32px;border:0;border-radius:50%;
+  background:#e8eef6;color:#263b59;font-size:19px;cursor:pointer;
+}
+.notification-list{display:grid;gap:7px}
+.notification-item{
+  display:flex;gap:10px;align-items:flex-start;background:#fff;
+  border-radius:13px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+.notification-item.unread{background:#eef6ff;border-left:3px solid #1978f5}
+.notification-icon{font-size:22px}
+.notification-item b{display:block;color:#102448;font-size:11px}
+.notification-item span{display:block;color:#61728b;font-size:9px;margin-top:3px;line-height:1.35}
+.notification-time{font-size:8px;color:#8a98aa;margin-top:4px}
+.notification-empty{
+  padding:22px 10px;text-align:center;background:#fff;border-radius:13px;
+  color:#60738b;font-size:11px
+}
+.notification-actions{display:flex;gap:7px;margin-top:9px}
+.notification-action{
+  flex:1;height:38px;border:0;border-radius:10px;
+  background:#e8eef6;color:#314864;font-size:10px;font-weight:700;cursor:pointer
+}
+.notification-action.primary{background:#1978f5;color:#fff}
+@media(max-width:430px){
+  .notification-panel{margin-top:62px}
+}
+</style>
+
+
+<style id="wallet-referral-css">
+.wallet-modal{position:fixed;inset:0;z-index:36000;display:none;align-items:center;justify-content:center;background:rgba(5,20,45,.45);backdrop-filter:blur(3px)}
+.wallet-modal.show{display:flex}
+.wallet-panel{width:min(400px,calc(100vw - 24px));max-height:82vh;overflow:auto;background:#f7f9fc;border-radius:22px;padding:16px;box-shadow:0 20px 55px rgba(10,35,70,.28)}
+.wallet-head{display:flex;align-items:center;justify-content:space-between}
+.wallet-head h2{margin:0;color:#102448;font-size:19px}
+.wallet-close{width:34px;height:34px;border:0;border-radius:50%;background:#e8eef6;color:#263b59;font-size:20px}
+.wallet-balance{margin-top:12px;padding:18px;border-radius:17px;background:linear-gradient(135deg,#1978f5,#5d9fff);color:#fff;text-align:center}
+.wallet-balance .amount{font-size:32px;font-weight:800}
+.wallet-balance small{font-size:10px;opacity:.9}
+.wallet-card{background:#fff;border-radius:14px;padding:12px;margin-top:10px}
+.wallet-card h3{margin:0 0 8px;color:#102448;font-size:13px}
+.wallet-input{width:100%;height:42px;box-sizing:border-box;border:1px solid #d8e1ed;border-radius:10px;padding:0 11px;font-size:12px;outline:none}
+.wallet-btn{width:100%;height:42px;border:0;border-radius:10px;background:#1978f5;color:#fff;font-size:11px;font-weight:800;margin-top:8px}
+.wallet-note{font-size:9px;color:#687b93;line-height:1.45;margin-top:7px}
+.wallet-history{display:grid;gap:7px}
+.wallet-tx{display:flex;justify-content:space-between;gap:8px;padding:9px;background:#f8fafc;border-radius:10px;font-size:10px}
+.wallet-tx .plus{color:#16a34a;font-weight:800}
+.wallet-tx .minus{color:#dc2626;font-weight:800}
+</style>
+<style id="real-wallet-css">
+.wallet-withdraw-card{border:1px solid #dbeafe}
+</style>
+
+<style id="auth-system-css">
+#authGate{position:fixed;inset:0;z-index:100000;background:#eef3f8;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif}
+#authGate.hidden{display:none}
+.auth-shell{width:100%;max-width:430px;min-height:100vh;background:#f7f9fc;overflow:auto;position:relative}
+.auth-screen{min-height:100vh;padding:24px 22px 34px;display:none;flex-direction:column;justify-content:center}
+.auth-screen.show{display:flex}
+.auth-splash{background:linear-gradient(160deg,#003b7d,#0d73df);color:#fff;text-align:center;align-items:center;justify-content:center}
+.auth-home{font-size:72px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.2));margin-bottom:18px}
+.auth-splash h1{font-size:32px;margin:0}.auth-splash p{font-size:13px;margin-top:7px;opacity:.92}
+.auth-loader{margin-top:32px;width:42px;height:42px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:authSpin 1s linear infinite}
+@keyframes authSpin{to{transform:rotate(360deg)}}
+.auth-logo{font-size:46px;text-align:center;margin-bottom:8px}.auth-title{text-align:center;color:#102448;font-size:25px;margin:0}.auth-sub{text-align:center;color:#64748b;font-size:11px;margin:6px 0 18px}
+.auth-card{background:#fff;border:1px solid #e4eaf2;border-radius:20px;padding:16px;box-shadow:0 8px 25px rgba(20,50,90,.07)}
+.auth-label{display:block;color:#526987;font-size:10px;font-weight:700;margin:9px 0 4px}.auth-input{width:100%;height:44px;border:1px solid #d8e2ee;border-radius:11px;padding:0 12px;box-sizing:border-box;font-size:13px;color:#102448;outline:none;background:#fff}.auth-input:focus{border-color:#1978f5;box-shadow:0 0 0 3px rgba(25,120,245,.1)}
+.auth-btn{width:100%;height:45px;border:0;border-radius:11px;background:#1978f5;color:#fff;font-weight:800;font-size:13px;cursor:pointer;margin-top:12px}.auth-btn:disabled{opacity:.55;cursor:not-allowed}.auth-btn.secondary{background:#eaf2ff;color:#1978f5}.auth-link{border:0;background:none;color:#1978f5;font-size:11px;font-weight:700;cursor:pointer;padding:10px 4px}.auth-or{display:flex;align-items:center;gap:8px;color:#94a3b8;font-size:10px;margin:10px 0}.auth-or:before,.auth-or:after{content:"";height:1px;background:#e6edf5;flex:1}.auth-footer{text-align:center;color:#64748b;font-size:11px;margin-top:13px}.auth-footer button{border:0;background:none;color:#1978f5;font-weight:800;cursor:pointer}
+.auth-error{display:none;margin:8px 0;padding:9px 10px;border-radius:9px;background:#fff0f1;color:#c0263d;font-size:10px;line-height:1.4}.auth-error.show{display:block}.auth-success{display:none;margin:8px 0;padding:9px 10px;border-radius:9px;background:#eafaf0;color:#16803c;font-size:10px}.auth-success.show{display:block}
+.otp-row{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}.otp-input{width:100%;height:47px;text-align:center;font-size:20px;font-weight:800;border:1px solid #d8e2ee;border-radius:10px;outline:none}.auth-back{border:0;background:none;color:#526987;font-size:11px;font-weight:700;cursor:pointer;margin-bottom:14px;text-align:left}.kyc-note{padding:10px;border-radius:10px;background:#eef6ff;color:#42617f;font-size:10px;line-height:1.45;margin-bottom:10px}.auth-status{display:flex;align-items:center;gap:8px;padding:10px;background:#f8fafc;border-radius:10px;font-size:10px;color:#526987;margin-top:8px}.auth-check{color:#16a34a;font-size:18px}.auth-userbar{display:flex;align-items:center;gap:8px;background:#eef6ff;padding:9px;border-radius:10px;margin-bottom:8px;font-size:10px;color:#314864}
+#mainAppLocked{display:none}body.auth-locked .app{display:none!important}
+@media(max-width:430px){.auth-shell{max-width:none}.auth-screen{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+
+
+<body class="auth-locked">
+<div id="authGate">
+ <div class="auth-shell">
+  <section id="authSplash" class="auth-screen auth-splash show">
+   <div class="auth-home">🏠</div><h1>Smart Home</h1><p>Control Your Home Smartly</p><div class="auth-loader"></div><div style="font-size:10px;margin-top:9px;opacity:.8">Loading...</div>
+  </section>
+
+  <section id="authLogin" class="auth-screen">
+   <div class="auth-logo">🏠</div><h2 class="auth-title">Smart Home</h2><p class="auth-sub">Welcome Back</p>
+   <div class="auth-card">
+    <div id="loginError" class="auth-error"></div>
+    <label class="auth-label">Mobile Number or Email</label><input id="loginEmail" class="auth-input" type="email" autocomplete="email" placeholder="Enter email">
+    <label class="auth-label">Password</label><input id="loginPassword" class="auth-input" type="password" autocomplete="current-password" placeholder="Enter password">
+    <div style="text-align:right"><button class="auth-link" type="button" onclick="showAuth('forgot')">Forgot Password?</button></div>
+    <button id="loginBtn" class="auth-btn" type="button" onclick="doLogin()">Login</button>
+    <div class="auth-or"><span>OR</span></div>
+    <button class="auth-btn secondary" type="button" onclick="authMessage('Google Login-এর জন্য Google OAuth client ID/backend configuration লাগবে।')">🌐 Login with Google</button>
+   </div>
+   <div class="auth-footer">Don't have an account? <button onclick="showAuth('signup')">Sign Up</button></div>
+  </section>
+
+  <section id="authSignup" class="auth-screen">
+   <div class="auth-logo">🏠</div><h2 class="auth-title">Create Your Account</h2><p class="auth-sub">Join Smart Home</p>
+   <div class="auth-card">
+    <div id="signupError" class="auth-error"></div><div id="signupSuccess" class="auth-success"></div>
+    <label class="auth-label">Full Name</label><input id="signupName" class="auth-input" placeholder="Your full name" autocomplete="name">
+    <label class="auth-label">Mobile Number</label><input id="signupMobile" class="auth-input" inputmode="numeric" maxlength="10" placeholder="10-digit mobile">
+    <label class="auth-label">Email</label><input id="signupEmail" class="auth-input" type="email" autocomplete="email" placeholder="you@example.com">
+    <label class="auth-label">Password</label><input id="signupPassword" class="auth-input" type="password" autocomplete="new-password" placeholder="Minimum 8 characters">
+    <label class="auth-label">Referral Code <span style="font-size:10px;color:#64748b">(Optional)</span></label><input id="signupReferral" class="auth-input" placeholder="Referral code থাকলে দিন, না থাকলে খালি রাখুন" value=""><div style="font-size:10px;color:#64748b;margin-top:-6px;margin-bottom:10px">Referral Code না দিলেও Sign Up করা যাবে।</div>
+    <button id="signupBtn" class="auth-btn" type="button" onclick="doSignup()">Sign Up</button>
+   </div>
+   <div class="auth-footer">Already have an account? <button onclick="showAuth('login')">Login</button></div>
+  </section>
+
+  <section id="authOtp" class="auth-screen">
+   <button class="auth-back" onclick="showAuth('signup')">← Back</button><div class="auth-logo">📱</div><h2 class="auth-title">Verify Your Mobile Number</h2><p class="auth-sub">Enter the 6-digit OTP sent to your mobile number</p>
+   <div class="auth-card">
+    <div id="otpError" class="auth-error"></div>
+    <div class="kyc-note">তোমার মোবাইল নম্বরে আসল SMS OTP পাঠানো হবে। OTP কাউকে শেয়ার করবেন না। OTP Verify হলেই সরাসরি Home Page খুলবে।</div>
+    <div class="otp-row">
+     <input class="otp-input" maxlength="1" inputmode="numeric"><input class="otp-input" maxlength="1" inputmode="numeric"><input class="otp-input" maxlength="1" inputmode="numeric"><input class="otp-input" maxlength="1" inputmode="numeric"><input class="otp-input" maxlength="1" inputmode="numeric"><input class="otp-input" maxlength="1" inputmode="numeric">
+    </div>
+    <button class="auth-btn" type="button" onclick="verifyOtp()">Verify OTP</button>
+    <div style="text-align:center;margin-top:8px"><button id="resendOtpBtn" class="auth-link" type="button" onclick="resendOtp()">Resend OTP</button><span id="otpTimer" style="font-size:10px;color:#94a3b8"></span></div>
+   </div>
+  </section>
+
+  <section id="authKyc" class="auth-screen">
+   <button class="auth-back" onclick="logoutLocal();showAuth('login')">← Login</button><div class="auth-logo">🛡️</div><h2 class="auth-title">Complete KYC</h2><p class="auth-sub">Complete KYC to unlock referral earnings and withdrawals</p>
+   <div class="auth-card">
+    <div id="kycError" class="auth-error"></div><div id="kycSuccess" class="auth-success"></div>
+    <div class="kyc-note">এই version-এ secure backend শুধু Name + Mobile KYC submit করে। Aadhaar document storage/verification এখনো যোগ করা হয়নি।</div>
+    <label class="auth-label">Full Name</label><input id="kycName" class="auth-input" placeholder="Name as per KYC">
+    <label class="auth-label">Mobile Number</label><input id="kycMobile" class="auth-input" inputmode="numeric" maxlength="10" placeholder="10-digit mobile">
+    <button id="kycBtn" class="auth-btn" type="button" onclick="submitKyc()">Submit KYC</button>
+   </div>
+  </section>
+
+  <section id="authSuccess" class="auth-screen" style="text-align:center;align-items:center">
+   <div style="font-size:82px">✅</div><h2 class="auth-title" style="margin-top:10px">Account Created!</h2><p class="auth-sub">Your mobile number is verified. Opening Smart Home...</p><button class="auth-btn" style="max-width:300px" onclick="enterApp()">Open Home</button>
+  </section>
+
+  <section id="authForgot" class="auth-screen">
+   <button class="auth-back" onclick="showAuth('login')">← Back to Login</button><div class="auth-logo">🔒</div><h2 class="auth-title">Forgot Password?</h2><p class="auth-sub">Enter your email to reset your password</p>
+   <div class="auth-card"><div class="kyc-note">Password reset backend এখনো এই project-এ নেই। নিরাপদ reset-এর জন্য email/SMS OTP service যোগ করতে হবে।</div><label class="auth-label">Email</label><input class="auth-input" id="forgotEmail" type="email" placeholder="you@example.com"><button class="auth-btn" onclick="authMessage('Password reset service configure না করা পর্যন্ত এই button কাজ করবে না।')">Send OTP</button></div>
+  </section>
+ </div>
+</div>
+
+<div class="mobile-view-badge">📱 Mobile View</div>
+
+<div class="app">
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="header">
+
+    <div class="topbar">
+
+        <div class="menu" onclick="openThreeDotMenu()">
+            ⋮
+        </div>
+
+        <div class="top-icons">
+
+            <div class="bell">
+                🔔
+                <span class="notification"></span>
+            </div>
+
+            <div class="profile">
+                👤
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="welcome">
+
+        <h1>
+            Welcome Home!
+        </h1>
+
+        <p>
+            Control Your Smart Home Easily
+        </p>
+
+    </div>
+
+
+    <!-- WEATHER -->
+
+    <div class="weather">
+
+        <div class="weather-left">
+
+            <div class="weather-icon">
+                🌤️
+            </div>
+
+            <div>
+
+                <div class="temp">
+                    28°C
+                </div>
+
+                <div class="weather-text">
+                    Partly Cloudy
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="weather-right">
+
+            <div class="date" id="date">
+                Sat, 4 Oct 2026
+            </div>
+
+            <div class="clock" id="time">
+                07:45 PM
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ROOMS ================= -->
+
+<section class="room-area">
+
+
+
+<div class="rooms" id="roomsBar">
+    <button type="button" class="room active" onclick="openRoomShop('All Rooms')">
+        <div class="room-icon">🏠</div>
+        All Rooms
+    </button>
+    <button type="button" class="room" onclick="openRoomShop('Bedroom')">
+        <div class="room-icon">🛏️</div>
+        Bedroom
+    </button>
+    <button type="button" class="room" onclick="openRoomShop('Living')">
+        <div class="room-icon">🛋️</div>
+        Living
+    </button>
+    <button type="button" class="room" onclick="openRoomShop('Kitchen')">
+        <div class="room-icon">🍳</div>
+        Kitchen
+    </button>
+    <button type="button" class="room" onclick="openRoomShop('Bathroom')">
+        <div class="room-icon">🚿</div>
+        Bathroom
+    </button>
+    <button type="button" class="room" onclick="openRoomShop('Other')">
+        <div class="room-icon">📦</div>
+        Other
+    </button>
+</div>
+
+
+
+<!-- ================= DEVICES ================= -->
+
+<div class="title-row">
+
+    <div class="title">
+
+        <span class="grid-icon">
+            ▦
+        </span>
+
+        Devices
+
+    </div>
+
+    <div class="see-all">
+        See All ❯
+    </div>
+
+</div>
+
+
+<div class="devices">
+
+
+<!-- LIGHT -->
+
+<div class="device" onclick="openLightManager()">
+
+    <div class="device-image">
+        💡
+    </div>
+
+    <div class="arrow" onclick="event.stopPropagation();openLightManager()">
+        ❯
+    </div>
+
+    <div class="device-name">
+        Light 1
+    </div>
+
+    <div class="device-room">
+        Bedroom
+    </div>
+
+    <div
+    class="switch"
+    onclick="event.stopPropagation();toggleDevice(this,'Light 1')">
+    </div>
+
+</div>
+
+
+<!-- FAN -->
+
+<div class="device" onclick="openFanManager()">
+
+    <div class="device-image">
+        🌀
+    </div>
+
+    <div class="arrow"
+         onclick="event.stopPropagation();openFanManager()">
+        ❯
+    </div>
+
+    <div class="device-name" id="fanDeviceName">
+        Fan
+    </div>
+
+    <div class="device-room" id="fanDeviceRoom">
+        Bedroom
+    </div>
+
+    <div
+        id="homeFanSwitch"
+        class="switch"
+        onclick="event.stopPropagation();toggleFanMaster()">
+    </div>
+
+</div>
+
+
+<!-- TV -->
+
+<div class="device" onclick="openTVManager()">
+
+    <div class="device-image">
+        📺
+    </div>
+
+    <div class="arrow" onclick="event.stopPropagation();openTVManager()">
+        ❯
+    </div>
+
+    <div class="device-name" id="tvDeviceName">
+        TV
+    </div>
+
+    <div class="device-room" id="tvDeviceRoom">
+        Living Room
+    </div>
+
+    <div id="homeTVSwitch" class="switch" onclick="event.stopPropagation();toggleTVMaster()"></div>
+
+</div>
+
+
+<!-- AC -->
+
+<div class="device" onclick="openACManager()">
+
+    <div class="device-image">
+        ❄️
+    </div>
+
+    <div class="arrow" onclick="event.stopPropagation();openACManager()">
+        ❯
+    </div>
+
+    <div class="device-name" id="acDeviceName">
+        AC
+    </div>
+
+    <div class="device-room" id="acDeviceRoom">
+        Living Room
+    </div>
+
+    <div id="homeACSwitch" class="switch" onclick="event.stopPropagation();toggleACMaster()"></div>
+
+</div>
+
+
+<!-- SOCKET -->
+
+<div class="device">
+
+    <div class="device-image">
+        🔌
+    </div>
+
+    <div class="arrow">
+        ❯
+    </div>
+
+    <div class="device-name">
+        Socket
+    </div>
+
+    <div class="device-room">
+        Kitchen
+    </div>
+
+    <div
+    class="switch on"
+    onclick="toggleDevice(this,'Socket')">
+    </div>
+
+</div>
+
+
+<!-- GEYSER -->
+
+<div class="device">
+
+    <div class="device-image">
+        🚿
+    </div>
+
+    <div class="arrow">
+        ❯
+    </div>
+
+    <div class="device-name">
+        Geyser
+    </div>
+
+    <div class="device-room">
+        Bathroom
+    </div>
+
+    <div
+    class="switch"
+    onclick="toggleDevice(this,'Geyser')">
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- ================= QUICK ACTIONS ================= -->
+
+<div class="quick-title">
+
+    <span>
+        ⚡
+    </span>
+
+    Quick Actions
+
+</div>
+
+
+<div class="quick">
+
+
+<div class="quick-card"
+onclick="schedule()">
+
+    <div class="quick-icon">
+        🕐
+    </div>
+
+    <div class="quick-name">
+        Schedule
+    </div>
+
+    <div class="quick-text">
+        Set Time
+    </div>
+
+</div>
+
+
+<div class="quick-card"
+onclick="timer()">
+
+    <div class="quick-icon">
+        📅
+    </div>
+
+    <div class="quick-name">
+        Timer
+    </div>
+
+    <div class="quick-text">
+        Auto ON/OFF
+    </div>
+
+</div>
+
+
+<div class="quick-card"
+onclick="voiceControl()">
+
+    <div class="quick-icon">
+        🎙️
+    </div>
+
+    <div class="quick-name">
+        Voice
+    </div>
+
+    <div class="quick-text">
+        Control
+    </div>
+
+</div>
+
+
+<div class="quick-card"
+onclick="settings()">
+
+    <div class="quick-icon">
+        ⚙️
+    </div>
+
+    <div class="quick-name">
+        Settings
+    </div>
+
+    <div class="quick-text">
+        App
+    </div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- ================= BOTTOM ================= -->
+
+<div class="bottom">
+
+
+<div class="nav active">
+
+    <div class="nav-icon">
+        🏠
+    </div>
+
+    Home
+
+</div>
+
+
+<div class="nav">
+
+    <div class="nav-icon">
+        📊
+    </div>
+
+    Rooms
+
+</div>
+
+
+<div class="nav" onclick="openAddMenu()">
+
+    <div class="add">
+        +
+    </div>
+
+    Add
+
+</div>
+
+
+<div class="nav">
+
+    <div class="nav-icon">
+        🕐
+    </div>
+
+    Schedule
+
+</div>
+
+
+<div class="nav" onclick="openProfileMenu()">
+
+    <div class="nav-icon">
+        👤
+    </div>
+
+    Profile
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ================= DEVICE ================= */
+
+function toggleDevice(button,name){
+
+    /*
+       HOME LIGHT = MASTER SWITCH / STATUS
+       1) One or more inside lights ON  -> outside shows ON.
+       2) All inside lights OFF          -> outside shows OFF.
+       3) Outside ON                     -> all inside lights ON.
+       4) Outside OFF                    -> all inside lights OFF.
+    */
+    if(name === "Fan"){
+        toggleFanMaster();
+        return;
+    }
+
+    if(name === "TV"){
+        toggleTVMaster();
+        return;
+    }
+
+    if(name === "AC"){
+        toggleACMaster();
+        return;
+    }
+
+    if(name === "Light 1" && typeof smartLights !== "undefined"){
+
+        const turnOn = !button.classList.contains("on");
+
+        smartLights.forEach(light => {
+            light.on = turnOn;
+        });
+
+        saveSmartLights();
+        updateOuterLightSwitch();
+
+        showLightToast(
+            turnOn ? "All lights ON" : "All lights OFF"
+        );
+        return;
+    }
+
+    button.classList.toggle("on");
+
+    if(button.classList.contains("on")){
+        console.log(name + " ON");
+    }else{
+        console.log(name + " OFF");
+    }
+
+}
+
+
+/* ================= DATE TIME ================= */
+
+function updateDate(){
+
+    const now = new Date();
+
+    const days = [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+    ];
+
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ];
+
+    let hours = now.getHours();
+
+    let minutes = now.getMinutes();
+
+    let ampm =
+        hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+
+    if(hours === 0){
+        hours = 12;
+    }
+
+    minutes =
+        String(minutes).padStart(2,"0");
+
+    document.getElementById("time")
+    .innerText =
+        String(hours).padStart(2,"0")
+        + ":"
+        + minutes
+        + " "
+        + ampm;
+
+
+    document.getElementById("date")
+    .innerText =
+        days[now.getDay()]
+        + ", "
+        + now.getDate()
+        + " "
+        + months[now.getMonth()]
+        + " "
+        + now.getFullYear();
+
+}
+
+setInterval(updateDate,1000);
+
+updateDate();
+
+
+/* ================= QUICK ACTIONS ================= */
+
+let smartSchedules = JSON.parse(localStorage.getItem("smartHomeSchedules") || "[]");
+
+function schedule(){
+  openSchedule();
+}
+
+function openSchedule(){
+  document.getElementById("scheduleModal").classList.add("show");
+  setScheduleDefaults();
+  renderSchedules();
+}
+
+function closeSchedule(event){
+  if(event && event.target !== event.currentTarget) return;
+  document.getElementById("scheduleModal").classList.remove("show");
+}
+
+function setScheduleDefaults(){
+  const now=new Date();
+  const date=now.toISOString().slice(0,10);
+  document.getElementById("scheduleDate").value=date;
+  document.getElementById("scheduleTime").value =
+    String(now.getHours()).padStart(2,"0")+":"+
+    String((now.getMinutes()+1)%60).padStart(2,"0");
+}
+
+function saveSchedule(){
+  const device=document.getElementById("scheduleDevice").value;
+  const date=document.getElementById("scheduleDate").value;
+  const time=document.getElementById("scheduleTime").value;
+  const action=document.getElementById("scheduleAction").value;
+
+  if(!device || !date || !time){
+    showToast("Device, Date এবং Time দিন");
+    return;
+  }
+
+  const id=Date.now();
+  smartSchedules.push({id,device,date,time,action,done:false});
+  localStorage.setItem("smartHomeSchedules",JSON.stringify(smartSchedules));
+  renderSchedules();
+  showToast("Schedule saved");
+}
+
+function renderSchedules(){
+  const list=document.getElementById("scheduleList");
+  if(!list) return;
+
+  if(!smartSchedules.length){
+    list.innerHTML='<div class="schedule-empty">কোনো Schedule সেট করা নেই।</div>';
+    return;
+  }
+
+  smartSchedules.sort((a,b)=>(a.date+" "+a.time).localeCompare(b.date+" "+b.time));
+
+  list.innerHTML=smartSchedules.map(s=>`
+    <div class="schedule-item">
+      <button class="schedule-delete" onclick="deleteSchedule(${s.id})">×</button>
+      <b>⏰ ${escapeScheduleText(s.device)} → ${s.action}</b>
+      📅 ${escapeScheduleText(s.date)} &nbsp; 🕐 ${escapeScheduleText(s.time)}
+    </div>
+  `).join("");
+}
+
+function deleteSchedule(id){
+  smartSchedules=smartSchedules.filter(s=>s.id!==id);
+  localStorage.setItem("smartHomeSchedules",JSON.stringify(smartSchedules));
+  renderSchedules();
+  showToast("Schedule deleted");
+}
+
+function escapeScheduleText(v){
+  return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+function runScheduledAction(s){
+  const on=s.action==="ON";
+  if(s.device==="Light 1"){
+    if(typeof smartLights!=="undefined"){
+      smartLights.forEach(l=>l.on=on);
+      saveSmartLights();
+      updateOuterLightSwitch();
+      if(typeof renderLightManager==="function") renderLightManager();
+    }
+  }else{
+    setHomeDeviceByName(s.device,on);
+  }
+  showToast("Schedule: "+s.device+" "+s.action);
+}
+
+function checkSchedules(){
+  const now=new Date();
+  const date=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+  const time=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
+
+  let changed=false;
+  smartSchedules.forEach(s=>{
+    if(!s.done && s.date===date && s.time===time){
+      runScheduledAction(s);
+      s.done=true;
+      changed=true;
+    }
+  });
+
+  if(changed){
+    localStorage.setItem("smartHomeSchedules",JSON.stringify(smartSchedules));
+    renderSchedules();
+  }
+}
+
+setInterval(checkSchedules,1000);
+
+let smartTimerInterval=null;
+let smartTimerEnd=0;
+let smartTimerRunning=false;
+
+function timer(){
+  openTimer();
+}
+
+function openTimer(){
+  document.getElementById("timerModal").classList.add("show");
+  resetTimerDisplay();
+}
+
+function closeTimer(event){
+  if(event && event.target !== event.currentTarget) return;
+  stopTimer();
+  document.getElementById("timerModal").classList.remove("show");
+}
+
+function getTimerSeconds(){
+  const min=parseInt(document.getElementById("timerMinutes").value||"0",10);
+  const sec=parseInt(document.getElementById("timerSeconds").value||"0",10);
+  return Math.max(0,min*60+sec);
+}
+
+function resetTimerDisplay(){
+  if(smartTimerRunning) return;
+  const total=getTimerSeconds();
+  updateTimerDisplay(total);
+  document.getElementById("timerState").textContent =
+    total ? "Ready — press Start Timer" : "Set minutes and seconds";
+}
+
+function updateTimerDisplay(total){
+  total=Math.max(0,Math.floor(total));
+  const m=Math.floor(total/60);
+  const s=total%60;
+  document.getElementById("timerDisplay").textContent =
+    String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+
+function startTimer(){
+  if(smartTimerRunning) return;
+  const seconds=getTimerSeconds();
+  if(seconds<=0){
+    showToast("Timer time দিন");
+    return;
+  }
+
+  smartTimerEnd=Date.now()+seconds*1000;
+  smartTimerRunning=true;
+  document.getElementById("timerState").textContent="Timer running…";
+  document.getElementById("startTimerBtn").textContent="▶ Running";
+
+  clearInterval(smartTimerInterval);
+  smartTimerInterval=setInterval(()=>{
+    const remaining=Math.max(0,Math.ceil((smartTimerEnd-Date.now())/1000));
+    updateTimerDisplay(remaining);
+
+    if(remaining<=0){
+      clearInterval(smartTimerInterval);
+      smartTimerRunning=false;
+      document.getElementById("startTimerBtn").textContent="▶ Start Timer";
+      document.getElementById("timerState").textContent="Timer finished";
+
+      const device=document.getElementById("timerDevice").value;
+      const action=document.getElementById("timerAction").value;
+      if(device && action){
+        setHomeDeviceByName(device,action==="ON");
+        showToast("Timer: "+device+" "+action);
+      }
+    }
+  },250);
+}
+
+function stopTimer(){
+  clearInterval(smartTimerInterval);
+  smartTimerInterval=null;
+  smartTimerRunning=false;
+  const btn=document.getElementById("startTimerBtn");
+  if(btn) btn.textContent="▶ Start Timer";
+  const state=document.getElementById("timerState");
+  if(state) state.textContent="Timer stopped";
+}
+
+function timerInputChanged(){
+  if(!smartTimerRunning) resetTimerDisplay();
+}
+
+let smartVoiceRecognition = null;
+let smartVoiceListening = false;
+
+function voiceControl(){
+  document.getElementById("voiceModal").classList.add("show");
+  setVoiceStatus("Ready", "Tap the microphone and speak.");
+}
+
+function closeVoiceControl(event){
+  if(event && event.target !== event.currentTarget) return;
+  stopVoiceControl();
+  document.getElementById("voiceModal").classList.remove("show");
+}
+
+function setVoiceStatus(title, detail){
+  const t=document.getElementById("voiceStatusTitle");
+  const d=document.getElementById("voiceStatusDetail");
+  if(t) t.textContent=title;
+  if(d) d.textContent=detail;
+}
+
+function normalizeVoice(text){
+  return String(text || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[।,!?]/g,"")
+    .replace(/\s+/g," ");
+}
+
+function findVoiceDevice(text){
+  const t=normalizeVoice(text);
+  const devices = [
+    {keys:["light","lights","লাইট","বাতি"], name:"Light 1"},
+    {keys:["fan","ফ্যান"], name:"Fan"},
+    {keys:["tv","টিভি","television"], name:"TV"},
+    {keys:["ac","এসি","air conditioner"], name:"AC"},
+    {keys:["socket","সকেট"], name:"Socket"},
+    {keys:["geyser","গিজার","water heater"], name:"Geyser"}
+  ];
+  for(const d of devices){
+    if(d.keys.some(k=>t.includes(k))) return d.name;
+  }
+  return null;
+}
+
+function voiceAction(text){
+  const t=normalizeVoice(text);
+  let action=null;
+
+  const onWords=["turn on","switch on","power on","on","চালু","জ্বালাও","অন","চালু কর"];
+  const offWords=["turn off","switch off","power off","off","বন্ধ","নেভাও","অফ","বন্ধ কর"];
+
+  if(onWords.some(w=>t.includes(w))) action="on";
+  else if(offWords.some(w=>t.includes(w))) action="off";
+
+  return action;
+}
+
+function setHomeDeviceByName(name, on){
+  const switches = document.querySelectorAll(".device .switch");
+  let found=false;
+
+  switches.forEach(sw=>{
+    const card=sw.closest(".device");
+    const title=card ? card.querySelector(".device-name") : null;
+    if(title && normalizeVoice(title.textContent) === normalizeVoice(name)){
+      if(name === "Light 1"){
+        if(typeof smartLights !== "undefined"){
+          smartLights.forEach(light=>light.on=on);
+          saveSmartLights();
+          updateOuterLightSwitch();
+          if(typeof renderLightManager==="function") renderLightManager();
+        }else{
+          sw.classList.toggle("on",on);
+        }
+      }else{
+        sw.classList.toggle("on",on);
+      }
+      found=true;
+    }
+  });
+
+  return found;
+}
+
+function executeVoiceCommand(text){
+  const device=findVoiceDevice(text);
+  const action=voiceAction(text);
+
+  document.getElementById("voiceLastCommand").textContent = text || "—";
+
+  if(!device){
+    setVoiceStatus("Device not found", "Say a device name, for example: Turn on Light.");
+    showToast("Device name বুঝতে পারিনি");
+    return false;
+  }
+
+  if(!action){
+    setVoiceStatus("Say ON or OFF", "Example: Turn on Fan / Turn off Light.");
+    showToast("ON বা OFF বলুন");
+    return false;
+  }
+
+  const ok=setHomeDeviceByName(device, action==="on");
+
+  if(ok){
+    setVoiceStatus("Command done", device + " → " + (action==="on" ? "ON" : "OFF"));
+    showToast(device + " " + (action==="on" ? "ON" : "OFF"));
+    return true;
+  }
+
+  setVoiceStatus("Device unavailable", device + " is not on the Home screen.");
+  return false;
+}
+
+function startVoiceControl(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+    setVoiceStatus("Voice not supported", "Use Chrome/Edge on a supported device.");
+    showToast("এই browser-এ voice recognition নেই");
+    return;
+  }
+
+  if(smartVoiceListening){
+    stopVoiceControl();
+    return;
+  }
+
+  smartVoiceRecognition = new SpeechRecognition();
+  smartVoiceRecognition.lang = "en-IN";
+  smartVoiceRecognition.continuous = false;
+  smartVoiceRecognition.interimResults = false;
+  smartVoiceRecognition.maxAlternatives = 1;
+
+  smartVoiceRecognition.onstart=()=>{
+    smartVoiceListening=true;
+    document.getElementById("voiceMic").classList.add("listening");
+    document.getElementById("voiceMic").textContent="🛑";
+    setVoiceStatus("Listening…", "Speak your ON/OFF command.");
+  };
+
+  smartVoiceRecognition.onresult=(event)=>{
+    const text=event.results[0][0].transcript;
+    executeVoiceCommand(text);
+  };
+
+  smartVoiceRecognition.onerror=(event)=>{
+    smartVoiceListening=false;
+    document.getElementById("voiceMic").classList.remove("listening");
+    document.getElementById("voiceMic").textContent="🎙️";
+    if(event.error==="not-allowed"){
+      setVoiceStatus("Microphone blocked", "Allow microphone permission and try again.");
+    }else{
+      setVoiceStatus("Voice error", "Please tap the microphone and try again.");
+    }
+  };
+
+  smartVoiceRecognition.onend=()=>{
+    smartVoiceListening=false;
+    document.getElementById("voiceMic").classList.remove("listening");
+    document.getElementById("voiceMic").textContent="🎙️";
+  };
+
+  try{
+    smartVoiceRecognition.start();
+  }catch(e){}
+}
+
+function stopVoiceControl(){
+  if(smartVoiceRecognition){
+    try{smartVoiceRecognition.stop();}catch(e){}
+  }
+  smartVoiceListening=false;
+  const mic=document.getElementById("voiceMic");
+  if(mic){
+    mic.classList.remove("listening");
+    mic.textContent="🎙️";
+  }
+}
+
+function settings(){
+
+    alert("Smart Home Settings");
+
+}
+
+
+/* ================= LIGHT MANAGEMENT ================= */
+
+let smartLights = JSON.parse(
+    localStorage.getItem("smartHomeLights") || "null"
+);
+
+if(!smartLights){
+    smartLights = [
+        {id:1,name:"Light 1",room:"Bedroom",on:true}
+    ];
+    localStorage.setItem(
+        "smartHomeLights",
+        JSON.stringify(smartLights)
+    );
+}
+
+/* Sync the Home screen master Light switch with inside lights. */
+updateOuterLightSwitch();
+
+function saveSmartLights(){
+    localStorage.setItem(
+        "smartHomeLights",
+        JSON.stringify(smartLights)
+    );
+}
+
+function openLightManager(){
+    renderLightManager();
+    document.getElementById("lightModal").classList.add("show");
+}
+
+function closeLightManager(event){
+    if(event && event.target !== event.currentTarget) return;
+    document.getElementById("lightModal").classList.remove("show");
+}
+
+function renderLightManager(){
+
+    const total = smartLights.length;
+    const on = smartLights.filter(light => light.on).length;
+    const off = total - on;
+
+    document.getElementById("lightTotal").textContent = total;
+    document.getElementById("lightOn").textContent = on;
+    document.getElementById("lightOff").textContent = off;
+
+    const list = document.getElementById("lightList");
+
+    if(!total){
+        list.innerHTML =
+            '<div class="light-empty">No light added yet.</div>';
+        return;
+    }
+
+    list.innerHTML = smartLights.map((light,index)=>`
+        <div class="light-card">
+            <button class="light-card-delete"
+                onclick="deleteLight(${index})">×</button>
+
+            <div class="light-card-icon">💡</div>
+            <div class="light-card-name">
+                ${escapeLightText(light.name)}
+            </div>
+            <div class="light-card-room">
+                ${escapeLightText(light.room)}
+            </div>
+
+            <button class="light-switch ${light.on ? "on" : ""}"
+                onclick="toggleSmartLight(${index})">
+            </button>
+        </div>
+    `).join("");
+}
+
+function addMultipleLights(){
+
+    let quantity = Number(
+        document.getElementById("lightQuantity").value
+    );
+
+    const room =
+        document.getElementById("lightRoom").value;
+
+    if(!quantity || quantity < 1){
+        alert("কতটি Light নিতে চান সেই সংখ্যা দিন");
+        return;
+    }
+
+    if(quantity > 100){
+        alert("একবারে সর্বোচ্চ 100টি Light যোগ করা যাবে");
+        return;
+    }
+
+    const startNumber = smartLights.length + 1;
+
+    for(let i=0;i<quantity;i++){
+
+        smartLights.push({
+            id:Date.now()+i,
+            name:"Light " + (startNumber+i),
+            room:room,
+            on:false
+        });
+    }
+
+    saveSmartLights();
+    renderLightManager();
+
+    document.getElementById("lightQuantity").value = 1;
+
+    alert(quantity + "টি Light যোগ হয়েছে");
+}
+
+function toggleSmartLight(index){
+
+    smartLights[index].on =
+        !smartLights[index].on;
+
+    saveSmartLights();
+    renderLightManager();
+    updateOuterLightSwitch();
+
+    showLightToast(
+        smartLights[index].name +
+        (smartLights[index].on ? " ON" : " OFF")
+    );
+}
+
+/*
+   Home screen Light 1 is a MASTER indicator.
+   ON = at least one inside light is ON.
+   OFF = every inside light is OFF.
+*/
+function updateOuterLightSwitch(){
+
+    const master = document.querySelector(
+        '.device .switch[onclick*="Light 1"]'
+    );
+
+    if(!master || typeof smartLights === "undefined") return;
+
+    // If ANY inside light is ON, the outside master shows ON.
+    // Only when ALL inside lights are OFF does the master show OFF.
+    const anyLightOn = smartLights.some(light => light.on === true);
+
+    master.classList.toggle("on", anyLightOn);
+}
+
+
+function deleteLight(index){
+
+    if(!confirm(
+        "আপনি কি " +
+        smartLights[index].name +
+        " delete করতে চান?"
+    )){
+        return;
+    }
+
+    smartLights.splice(index,1);
+
+    saveSmartLights();
+    renderLightManager();
+}
+
+function escapeLightText(text){
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function showLightToast(message){
+
+    let toast = document.getElementById("lightToast");
+
+    if(!toast){
+
+        toast = document.createElement("div");
+        toast.id = "lightToast";
+
+        toast.style.position = "fixed";
+        toast.style.zIndex = "700";
+        toast.style.left = "50%";
+        toast.style.bottom = "75px";
+        toast.style.transform = "translateX(-50%)";
+        toast.style.padding = "9px 13px";
+        toast.style.borderRadius = "10px";
+        toast.style.background = "#173258";
+        toast.style.color = "#fff";
+        toast.style.fontSize = "11px";
+
+        document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+
+    clearTimeout(window.lightToastTimer);
+
+    window.lightToastTimer =
+        setTimeout(()=>{
+            toast.remove();
+        },1800);
+}
+
+
+
+/* ================= REFERRAL SYSTEM ================= */
+
+function getReferralCode(){
+  let code = localStorage.getItem("smartHomeReferralCode");
+
+  if(!code){
+    code =
+      "SH" +
+      Math.random()
+        .toString(36)
+        .substring(2,7)
+        .toUpperCase();
+
+    localStorage.setItem(
+      "smartHomeReferralCode",
+      code
+    );
+  }
+
+  return code;
+}
+
+function getReferralData(){
+  return JSON.parse(
+    localStorage.getItem("smartHomeReferralData") ||
+    '{"total":0,"joined":0,"pending":0}'
+  );
+}
+
+function saveReferralData(data){
+  localStorage.setItem(
+    "smartHomeReferralData",
+    JSON.stringify(data)
+  );
+}
+
+function makeReferralLink(){
+
+  const code = getReferralCode();
+
+  const base =
+    window.location.href.split("#")[0];
+
+  return base + "#ref=" + encodeURIComponent(code);
+}
+
+
+
+function openAddMenu(){
+  document.getElementById("addMenu").classList.add("show");
+}
+
+function closeAddMenu(event){
+  if(event && event.target !== event.currentTarget) return;
+  document.getElementById("addMenu").classList.remove("show");
+}
+
+function openAddDevice(){
+  document.getElementById("deviceModal").classList.add("show");
+  showDeviceTab("add");
+  stopQrScanner();
+}
+
+function closeAddDevice(event){
+  if(event && event.target !== event.currentTarget) return;
+  stopQrScanner();
+  document.getElementById("deviceModal").classList.remove("show");
+}
+
+function showDeviceTab(tab){
+  document.getElementById("addDeviceTab").style.display = tab === "add" ? "block" : "none";
+  document.getElementById("deviceQrTab").style.display = tab === "qr" ? "block" : "none";
+  document.getElementById("deviceScanTab").style.display = tab === "scan" ? "block" : "none";
+
+  document.querySelectorAll(".device-tab").forEach(btn => btn.classList.remove("active"));
+  const active = document.querySelector('[data-device-tab="' + tab + '"]');
+  if(active) active.classList.add("active");
+
+  if(tab !== "scan") stopQrScanner();
+}
+
+function makeDeviceQr(){
+  const name = document.getElementById("newDeviceName").value.trim() || "My Device";
+  const type = document.getElementById("newDeviceType").value;
+  const room = document.getElementById("newDeviceRoom").value;
+  const payload = JSON.stringify({
+    app:"SmartHome",
+    action:"add-device",
+    deviceName:name,
+    deviceType:type,
+    room:room,
+    id:"SH-" + Date.now()
+  });
+
+  const box = document.getElementById("deviceQr");
+  box.innerHTML = "";
+
+  if(typeof QRCode === "undefined"){
+    box.innerHTML = '<div style="padding:20px;text-align:center;font-size:10px;color:#60738b">QR generator loading...<br>Please try again.</div>';
+    loadQrLibrary().then(makeDeviceQr);
+    return;
+  }
+
+  new QRCode(box,{
+    text:payload,
+    width:190,
+    height:190,
+    correctLevel:QRCode.CorrectLevel.M
+  });
+  document.getElementById("qrPayloadText").textContent = payload;
+}
+
+function loadQrLibrary(){
+  return new Promise((resolve,reject)=>{
+    if(window.QRCode){ resolve(); return; }
+    const s=document.createElement("script");
+    s.src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+    s.onload=resolve;
+    s.onerror=reject;
+    document.head.appendChild(s);
+  });
+}
+
+function prepareDeviceQr(){
+  loadQrLibrary().then(makeDeviceQr).catch(()=>{
+    document.getElementById("deviceQr").innerHTML =
+      '<div style="padding:20px;text-align:center;font-size:10px;color:#d33">QR library could not load. Internet connection required for QR generation.</div>';
+  });
+}
+
+function startQrScanner(){
+  const area = document.getElementById("qrScanner");
+  area.innerHTML = "";
+  if(!window.isSecureContext && location.hostname !== "localhost"){
+    area.innerHTML='<div style="color:#fff;padding:30px;text-align:center;font-size:11px">Camera scanner needs HTTPS or localhost.</div>';
+    return;
+  }
+  if(!window.Html5Qrcode){
+    loadScannerLibrary().then(()=>startQrScanner()).catch(()=>{
+      area.innerHTML='<div style="color:#fff;padding:30px;text-align:center;font-size:11px">Scanner library could not load. Please use HTTPS and internet.</div>';
+    });
+    return;
+  }
+  window.smartQrScanner = new Html5Qrcode("qrScanner");
+  Html5Qrcode.getCameras().then(cameras=>{
+    if(!cameras || !cameras.length){
+      area.innerHTML='<div style="color:#fff;padding:30px;text-align:center;font-size:11px">No camera found.</div>';
+      return;
+    }
+    const cam = cameras.find(c => /back|rear|environment/i.test(c.label)) || cameras[0];
+    window.smartQrScanner.start(
+      cam.id,
+      {fps:10,qrbox:{width:210,height:210}},
+      decoded=>{
+        document.getElementById("scannedQrResult").value = decoded;
+        showToast("QR code scanned");
+        stopQrScanner();
+      },
+      ()=>{}
+    ).catch(err=>{
+      area.innerHTML='<div style="color:#fff;padding:30px;text-align:center;font-size:11px">Camera permission দিন এবং আবার Start Scanner চাপুন.</div>';
+    });
+  }).catch(()=>{
+    area.innerHTML='<div style="color:#fff;padding:30px;text-align:center;font-size:11px">Camera permission পাওয়া যায়নি.</div>';
+  });
+}
+
+function loadScannerLibrary(){
+  return new Promise((resolve,reject)=>{
+    if(window.Html5Qrcode){resolve();return;}
+    const s=document.createElement("script");
+    s.src="https://unpkg.com/html5-qrcode";
+    s.onload=resolve;
+    s.onerror=reject;
+    document.head.appendChild(s);
+  });
+}
+
+function stopQrScanner(){
+  if(window.smartQrScanner){
+    try{
+      const state = window.smartQrScanner.getState();
+      if(state === 2){
+        window.smartQrScanner.stop().catch(()=>{});
+      }
+    }catch(e){}
+    window.smartQrScanner = null;
+  }
+}
+
+function useScannedDevice(){
+  const value=document.getElementById("scannedQrResult").value.trim();
+  if(!value){
+    showToast("আগে QR scan করুন");
+    return;
+  }
+  localStorage.setItem("smartHomeLastScannedDevice",value);
+  showToast("Device QR saved");
+  showDeviceTab("add");
+}
+
+function saveNewDevice(){
+  const name=document.getElementById("newDeviceName").value.trim();
+  const type=document.getElementById("newDeviceType").value;
+  const room=document.getElementById("newDeviceRoom").value;
+  if(!name){
+    showToast("Device name দিন");
+    return;
+  }
+  const devices=JSON.parse(localStorage.getItem("smartHomeDevices")||"[]");
+  devices.push({id:Date.now(),name,type,room,on:false});
+  localStorage.setItem("smartHomeDevices",JSON.stringify(devices));
+  showToast(name+" added");
+  closeAddDevice();
+}
+
+function openFamilyShare(){
+  alert("Family Share: Family sharing system এখানে যুক্ত করা যাবে।");
+}
+
+function openReferral(){
+
+  document.getElementById("referralCode")
+    .textContent = getReferralCode();
+
+  document.getElementById("referralLink")
+    .value = makeReferralLink();
+
+  updateReferralStats();
+
+  document.getElementById("referralModal")
+    .classList.add("show");
+}
+
+function closeReferral(event){
+
+  if(
+    event &&
+    event.target !== event.currentTarget
+  ){
+    return;
+  }
+
+  document.getElementById("referralModal")
+    .classList.remove("show");
+}
+
+function updateReferralStats(){
+
+  const data = getReferralData();
+
+  document.getElementById("refTotal")
+    .textContent = data.total;
+
+  document.getElementById("refJoined")
+    .textContent = data.joined;
+
+  document.getElementById("refPending")
+    .textContent = data.pending;
+}
+
+async function copyReferralLink(){
+
+  const link =
+    document.getElementById("referralLink").value;
+
+  try{
+
+    await navigator.clipboard.writeText(link);
+
+    showToast("Referral link copied");
+
+  }catch(error){
+
+    document.getElementById("referralLink").select();
+
+    showToast("Link select করুন এবং Copy করুন");
+  }
+}
+
+async function shareReferralLink(){
+
+  const code = getReferralCode();
+  const link = makeReferralLink();
+
+  const text =
+    "🏠 Join my Smart Home app!\n\n" +
+    "Use my referral code: " +
+    code +
+    "\n\nOpen this link:\n" +
+    link;
+
+  const data = getReferralData();
+
+  data.total += 1;
+  data.pending += 1;
+
+  saveReferralData(data);
+  updateReferralStats();
+
+  if(navigator.share){
+
+    try{
+
+      await navigator.share({
+        title:"Smart Home Referral",
+        text:text,
+        url:link
+      });
+
+      showToast("Invite shared");
+
+    }catch(error){
+
+      /* User cancelled sharing. */
+    }
+
+  }else{
+
+    try{
+
+      await navigator.clipboard.writeText(text);
+
+      showToast("Invite copied");
+
+    }catch(error){
+
+      showToast("Referral link ready");
+    }
+  }
+}
+
+
+function shareToWhatsApp(){
+  const code = getReferralCode();
+  const link = makeReferralLink();
+  const text =
+    "🏠 Join my Smart Home app!\n\n" +
+    "Use my referral code: " + code +
+    "\n\nOpen this link:\n" + link;
+
+  const data = getReferralData();
+  data.total += 1;
+  data.pending += 1;
+  saveReferralData(data);
+  updateReferralStats();
+
+  const wa = "https://wa.me/?text=" + encodeURIComponent(text);
+  window.open(wa, "_blank");
+  showToast("WhatsApp share opened");
+}
+
+function shareToFacebook(){
+  const link = makeReferralLink();
+
+  const data = getReferralData();
+  data.total += 1;
+  data.pending += 1;
+  saveReferralData(data);
+  updateReferralStats();
+
+  const fb =
+    "https://www.facebook.com/sharer/sharer.php?u=" +
+    encodeURIComponent(link);
+
+  window.open(fb, "_blank", "width=700,height=600");
+  showToast("Facebook share opened");
+}
+
+async function copyReferralCode(){
+
+  const code = getReferralCode();
+
+  try{
+
+    await navigator.clipboard.writeText(code);
+
+    showToast("Referral code copied");
+
+  }catch(error){
+
+    showToast("Code: " + code);
+  }
+}
+
+function showReferralInfo(){
+
+  const info =
+    document.getElementById("refInfo");
+
+  info.innerHTML =
+    "<b>How it works:</b><br>" +
+    "1. Tap Share.<br>" +
+    "2. Send your referral link to a friend.<br>" +
+    "3. Your friend opens the link.<br>" +
+    "4. During sign-up, the referral code can be saved.<br>" +
+    "5. A real reward/commission system needs a backend.";
+
+}
+
+/* Detect referral code when this page is opened with #ref=CODE */
+function detectReferral(){
+
+  const hash =
+    window.location.hash;
+
+  if(!hash.startsWith("#ref=")){
+    return;
+  }
+
+  const code =
+    decodeURIComponent(
+      hash.substring(5)
+    );
+
+  if(code){
+
+    localStorage.setItem(
+      "smartHomePendingReferral",
+      code
+    );
+
+    showToast(
+      "Referral code detected: " + code
+    );
+  }
+}
+
+detectReferral();
+
+
+/* ================= FAN MANAGEMENT ================= */
+
+let smartFans = JSON.parse(
+    localStorage.getItem("smartHomeFans") || "null"
+);
+
+if(!Array.isArray(smartFans) || smartFans.length === 0){
+
+    smartFans = [
+        {
+            id: Date.now(),
+            name: "Fan 1",
+            room: "Bedroom",
+            on: false
+        }
+    ];
+
+    saveSmartFans();
+}
+
+
+function saveSmartFans(){
+
+    localStorage.setItem(
+        "smartHomeFans",
+        JSON.stringify(smartFans)
+    );
+
+}
+
+
+/* Open Fan Manager */
+
+function openFanManager(){
+
+    renderFanManager();
+
+    const modal = document.getElementById("fanModal");
+
+    if(modal){
+        modal.classList.add("show");
+    }
+
+}
+
+
+/* Close Fan Manager */
+
+function closeFanManager(event){
+
+    if(
+        event &&
+        event.target !== event.currentTarget
+    ){
+        return;
+    }
+
+    const modal = document.getElementById("fanModal");
+
+    if(modal){
+        modal.classList.remove("show");
+    }
+
+}
+
+
+/* Add any number of Fans */
+
+function addMultipleFans(){
+
+    const input =
+        document.getElementById("fanQuantity");
+
+    const room =
+        document.getElementById("fanRoom");
+
+    let quantity =
+        Number(input.value);
+
+    if(!Number.isInteger(quantity) || quantity < 1){
+
+        alert("কমপক্ষে 1টি Fan-এর সংখ্যা দিন।");
+
+        input.focus();
+
+        return;
+    }
+
+    if(quantity > 100){
+
+        alert("একবারে সর্বোচ্চ 100টি Fan যোগ করা যাবে।");
+
+        input.focus();
+
+        return;
+    }
+
+    const selectedRoom = room.value;
+
+    let highestNumber = 0;
+
+    smartFans.forEach(fan => {
+
+        const match =
+            String(fan.name).match(/^Fan\s+(\d+)$/i);
+
+        if(match){
+            highestNumber =
+                Math.max(
+                    highestNumber,
+                    Number(match[1])
+                );
+        }
+
+    });
+
+
+    for(let i = 1; i <= quantity; i++){
+
+        highestNumber++;
+
+        smartFans.push({
+
+            id:
+                Date.now() +
+                Math.random(),
+
+            name:
+                "Fan " +
+                highestNumber,
+
+            room:
+                selectedRoom,
+
+            on:false
+
+        });
+
+    }
+
+
+    saveSmartFans();
+
+    renderFanManager();
+
+    input.value = 1;
+
+    alert(
+        quantity +
+        (quantity === 1
+            ? "টি Fan যোগ হয়েছে।"
+            : "টি Fan যোগ হয়েছে।")
+    );
+
+}
+
+
+/* Render all Fans */
+
+function renderFanManager(){
+
+    const total =
+        smartFans.length;
+
+    const on =
+        smartFans.filter(
+            fan => fan.on
+        ).length;
+
+    const off =
+        total - on;
+
+
+    const totalEl =
+        document.getElementById("fanTotal");
+
+    const onEl =
+        document.getElementById("fanOn");
+
+    const offEl =
+        document.getElementById("fanOff");
+
+
+    if(totalEl) totalEl.textContent = total;
+
+    if(onEl) onEl.textContent = on;
+
+    if(offEl) offEl.textContent = off;
+
+
+    const list =
+        document.getElementById("fanList");
+
+    if(!list) return;
+
+
+    if(smartFans.length === 0){
+
+        list.innerHTML = `
+            <div style="
+                grid-column:1/-1;
+                padding:20px;
+                text-align:center;
+                color:#687a92;
+                background:white;
+                border-radius:13px;
+            ">
+                কোনো Fan নেই।
+            </div>
+        `;
+
+        updateFanMaster();
+
+        return;
+    }
+
+
+    list.innerHTML =
+        smartFans.map(
+            (fan,index) => `
+
+            <div class="light-card">
+
+                <button
+                    class="light-card-delete"
+                    onclick="deleteFan(${index})"
+                    title="Delete Fan">
+                    ×
+                </button>
+
+                <div class="light-card-icon">
+                    🌀
+                </div>
+
+                <div class="light-card-name">
+                    ${escapeFanText(fan.name)}
+                </div>
+
+                <div class="light-card-room">
+                    ${escapeFanText(fan.room)}
+                </div>
+
+                <button
+                    onclick="toggleSmartFan(${index})"
+                    style="
+                        width:100%;
+                        margin-top:8px;
+                        height:30px;
+                        border:0;
+                        border-radius:9px;
+                        background:${fan.on ? '#1978f5' : '#dfe7f0'};
+                        color:${fan.on ? 'white' : '#40536d'};
+                        font-size:10px;
+                        font-weight:700;
+                        cursor:pointer;
+                    ">
+                    ${fan.on ? 'ON' : 'OFF'}
+                </button>
+
+            </div>
+
+        `
+        ).join("");
+
+
+    updateFanMaster();
+
+    updateFanHomeText();
+
+}
+
+
+/* Safe text for Fan names/rooms */
+
+function escapeFanText(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* Individual Fan ON/OFF */
+
+function toggleSmartFan(index){
+
+    if(!smartFans[index]) return;
+
+    smartFans[index].on =
+        !smartFans[index].on;
+
+    saveSmartFans();
+
+    renderFanManager();
+
+}
+
+
+/* Delete one Fan */
+
+function deleteFan(index){
+
+    if(!smartFans[index]) return;
+
+    const name =
+        smartFans[index].name;
+
+    if(
+        !confirm(
+            name +
+            " delete করতে চান?"
+        )
+    ){
+        return;
+    }
+
+    smartFans.splice(index,1);
+
+    saveSmartFans();
+
+    renderFanManager();
+
+}
+
+
+/* Home Fan master switch */
+
+function toggleFanMaster(){
+
+    if(smartFans.length === 0){
+
+        openFanManager();
+
+        return;
+    }
+
+
+    const anyOn =
+        smartFans.some(
+            fan => fan.on
+        );
+
+    const turnOn = !anyOn;
+
+
+    smartFans.forEach(
+        fan => {
+            fan.on = turnOn;
+        }
+    );
+
+
+    saveSmartFans();
+
+    updateFanMaster();
+
+    updateFanHomeText();
+
+    renderFanManager();
+
+}
+
+
+/* Home switch status */
+
+function updateFanMaster(){
+
+    const button =
+        document.getElementById(
+            "homeFanSwitch"
+        );
+
+    if(!button) return;
+
+
+    const anyOn =
+        smartFans.some(
+            fan => fan.on
+        );
+
+
+    button.classList.toggle(
+        "on",
+        anyOn
+    );
+
+}
+
+
+/* Home Fan card text */
+
+function updateFanHomeText(){
+
+    const name =
+        document.getElementById(
+            "fanDeviceName"
+        );
+
+    const room =
+        document.getElementById(
+            "fanDeviceRoom"
+        );
+
+
+    if(name){
+
+        name.textContent =
+            smartFans.length > 0
+            ? "Fan (" + smartFans.length + ")"
+            : "Fan";
+
+    }
+
+
+    if(room && smartFans.length > 0){
+
+        const rooms = [
+            ...new Set(
+                smartFans.map(
+                    fan => fan.room
+                )
+            )
+        ];
+
+        room.textContent =
+            rooms.length === 1
+            ? rooms[0]
+            : rooms.length + " Rooms";
+
+    }
+
+}
+
+
+/* Initial Fan state */
+
+updateFanMaster();
+
+updateFanHomeText();
+
+
+
+/* ================= TV MANAGEMENT ================= */
+let smartTVs = JSON.parse(localStorage.getItem("smartHomeTVs") || "null");
+if(!Array.isArray(smartTVs)){ smartTVs=[{id:Date.now(),name:"TV 1",room:"Living Room",on:false}]; saveSmartTVs(); }
+function saveSmartTVs(){ localStorage.setItem("smartHomeTVs",JSON.stringify(smartTVs)); }
+function openTVManager(){ renderTVManager(); document.getElementById("tvModal")?.classList.add("show"); }
+function closeTVManager(event){ if(event && event.target!==event.currentTarget)return; document.getElementById("tvModal")?.classList.remove("show"); }
+function addMultipleTVs(){
+ const input=document.getElementById("tvQuantity"), room=document.getElementById("tvRoom"); let q=Number(input.value);
+ if(!Number.isInteger(q)||q<1){alert("কমপক্ষে 1টি TV-এর সংখ্যা দিন।");input.focus();return;}
+ if(q>100){alert("একবারে সর্বোচ্চ 100টি TV যোগ করা যাবে।");input.focus();return;}
+ let n=0; smartTVs.forEach(tv=>{const m=String(tv.name).match(/^TV\s+(\d+)$/i);if(m)n=Math.max(n,Number(m[1]));});
+ for(let i=0;i<q;i++){n++;smartTVs.push({id:Date.now()+Math.random(),name:"TV "+n,room:room.value,on:false});}
+ saveSmartTVs();renderTVManager();input.value=1;showToast(q+"টি TV যোগ হয়েছে।");
+}
+function renderTVManager(){
+ const total=smartTVs.length,on=smartTVs.filter(x=>x.on).length;
+ document.getElementById("tvTotal")?.replaceChildren(String(total));document.getElementById("tvOn")?.replaceChildren(String(on));document.getElementById("tvOff")?.replaceChildren(String(total-on));
+ const list=document.getElementById("tvList");if(!list)return;
+ if(!smartTVs.length){list.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;color:#687a92;background:white;border-radius:13px;">কোনো TV নেই।</div>';updateTVMaster();updateTVHomeText();return;}
+ list.innerHTML=smartTVs.map((tv,i)=>`<div class="light-card"><button class="light-card-delete" onclick="deleteTV(${i})" title="Delete TV">×</button><div class="light-card-icon">📺</div><div class="light-card-name">${escapeTVText(tv.name)}</div><div class="light-card-room">${escapeTVText(tv.room)}</div><button onclick="toggleSmartTV(${i})" style="width:100%;margin-top:8px;height:30px;border:0;border-radius:9px;background:${tv.on?'#1978f5':'#dfe7f0'};color:${tv.on?'white':'#40536d'};font-size:10px;font-weight:700;cursor:pointer;">${tv.on?'ON':'OFF'}</button></div>`).join("");
+ updateTVMaster();updateTVHomeText();
+}
+function escapeTVText(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#039;");}
+function toggleSmartTV(i){if(!smartTVs[i])return;smartTVs[i].on=!smartTVs[i].on;saveSmartTVs();renderTVManager();}
+function deleteTV(i){if(!smartTVs[i])return;if(!confirm(smartTVs[i].name+" delete করবেন?"))return;smartTVs.splice(i,1);saveSmartTVs();renderTVManager();}
+function toggleTVMaster(){if(!smartTVs.length){openTVManager();return;}const turnOn=!smartTVs.some(x=>x.on);smartTVs.forEach(x=>x.on=turnOn);saveSmartTVs();updateTVMaster();updateTVHomeText();renderTVManager();}
+function updateTVMaster(){const sw=document.getElementById("homeTVSwitch");if(sw)sw.classList.toggle("on",smartTVs.some(x=>x.on));}
+function updateTVHomeText(){const n=document.getElementById("tvDeviceName"),r=document.getElementById("tvDeviceRoom");if(n)n.textContent=smartTVs.length?"TV ("+smartTVs.length+")":"TV";if(r){const rooms=[...new Set(smartTVs.map(x=>x.room))];r.textContent=rooms.length===1?rooms[0]:(rooms.length?rooms.length+" Rooms":"No TV");}}
+updateTVMaster();updateTVHomeText();
+
+
+/* ================= AC MANAGEMENT ================= */
+let smartACs = JSON.parse(localStorage.getItem("smartHomeACs") || "null");
+if(!Array.isArray(smartACs)){
+    smartACs=[{id:Date.now(),name:"AC 1",room:"Living Room",on:false}];
+    saveSmartACs();
+}
+function saveSmartACs(){ localStorage.setItem("smartHomeACs",JSON.stringify(smartACs)); }
+function openACManager(){ renderACManager(); document.getElementById("acModal")?.classList.add("show"); }
+function closeACManager(event){ if(event && event.target!==event.currentTarget)return; document.getElementById("acModal")?.classList.remove("show"); }
+function addMultipleACs(){
+    const input=document.getElementById("acQuantity"), room=document.getElementById("acRoom");
+    let q=Number(input.value);
+    if(!Number.isInteger(q)||q<1){alert("কমপক্ষে 1টি AC-এর সংখ্যা দিন।");input.focus();return;}
+    if(q>100){alert("একবারে সর্বোচ্চ 100টি AC যোগ করা যাবে।");input.focus();return;}
+    let n=0; smartACs.forEach(ac=>{const m=String(ac.name).match(/^AC\s+(\d+)$/i);if(m)n=Math.max(n,Number(m[1]));});
+    for(let i=0;i<q;i++){n++;smartACs.push({id:Date.now()+Math.random(),name:"AC "+n,room:room.value,on:false});}
+    saveSmartACs();renderACManager();input.value=1;showToast(q+"টি AC যোগ হয়েছে।");
+}
+function renderACManager(){
+    const total=smartACs.length,on=smartACs.filter(x=>x.on).length;
+    document.getElementById("acTotal")?.replaceChildren(String(total));
+    document.getElementById("acOn")?.replaceChildren(String(on));
+    document.getElementById("acOff")?.replaceChildren(String(total-on));
+    const list=document.getElementById("acList"); if(!list)return;
+    if(!smartACs.length){list.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;color:#687a92;background:white;border-radius:13px;">কোনো AC নেই।</div>';updateACMaster();updateACHomeText();return;}
+    list.innerHTML=smartACs.map((ac,i)=>`<div class="light-card"><button class="light-card-delete" onclick="deleteAC(${i})" title="Delete AC">×</button><div class="light-card-icon">❄️</div><div class="light-card-name">${escapeACText(ac.name)}</div><div class="light-card-room">${escapeACText(ac.room)}</div><button onclick="toggleSmartAC(${i})" style="width:100%;margin-top:8px;height:30px;border:0;border-radius:9px;background:${ac.on?'#1978f5':'#dfe7f0'};color:${ac.on?'white':'#40536d'};font-size:10px;font-weight:700;cursor:pointer;">${ac.on?'ON':'OFF'}</button></div>`).join("");
+    updateACMaster();updateACHomeText();
+}
+function escapeACText(v){return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#039;");}
+function toggleSmartAC(i){if(!smartACs[i])return;smartACs[i].on=!smartACs[i].on;saveSmartACs();renderACManager();}
+function deleteAC(i){if(!smartACs[i])return;if(!confirm(smartACs[i].name+" delete করবেন?"))return;smartACs.splice(i,1);saveSmartACs();renderACManager();}
+function toggleACMaster(){if(!smartACs.length){openACManager();return;}const turnOn=!smartACs.some(x=>x.on);smartACs.forEach(x=>x.on=turnOn);saveSmartACs();updateACMaster();updateACHomeText();renderACManager();}
+function updateACMaster(){const sw=document.getElementById("homeACSwitch");if(sw)sw.classList.toggle("on",smartACs.some(x=>x.on));}
+function updateACHomeText(){const n=document.getElementById("acDeviceName"),r=document.getElementById("acDeviceRoom");if(n)n.textContent=smartACs.length?"AC ("+smartACs.length+")":"AC";if(r){const rooms=[...new Set(smartACs.map(x=>x.room))];r.textContent=rooms.length===1?rooms[0]:(rooms.length?rooms.length+" Rooms":"No AC");}}
+updateACMaster();updateACHomeText();
+</script>
+
+
+<!-- ================= AC MANAGEMENT MODAL ================= -->
+<div class="light-modal" id="acModal" onclick="closeACManager(event)">
+    <div class="light-panel" onclick="event.stopPropagation()">
+        <div class="light-head">
+            <h2>❄️ My ACs</h2>
+            <button class="light-close" onclick="closeACManager()">×</button>
+        </div>
+        <div class="light-summary">
+            <div class="light-stat"><div class="light-stat-number" id="acTotal">0</div><div class="light-stat-label">Total AC</div></div>
+            <div class="light-stat"><div class="light-stat-number" id="acOn">0</div><div class="light-stat-label">ON</div></div>
+            <div class="light-stat"><div class="light-stat-number" id="acOff">0</div><div class="light-stat-label">OFF</div></div>
+        </div>
+        <div class="light-add-box">
+            <b style="font-size:12px;color:#102448">Add your own AC</b>
+            <label class="light-label">How many AC do you want?</label>
+            <input class="light-input" id="acQuantity" type="number" min="1" max="100" value="1" placeholder="Example: 3">
+            <label class="light-label">Room</label>
+            <select class="light-select" id="acRoom">
+                <option>Bedroom</option><option>Living Room</option><option>Kitchen</option><option>Bathroom</option><option>Other</option>
+            </select>
+            <button class="light-primary" onclick="addMultipleACs()">+ Add AC</button>
+        </div>
+        <div class="light-list" id="acList"></div>
+    </div>
+</div>
+
+
+<!-- ================= LIGHT MANAGEMENT MODAL ================= -->
+
+<div class="light-modal" id="lightModal" onclick="closeLightManager(event)">
+    <div class="light-panel" onclick="event.stopPropagation()">
+
+        <div class="light-head">
+            <h2>💡 My Lights</h2>
+            <button class="light-close" onclick="closeLightManager()">×</button>
+        </div>
+
+        <div class="light-summary">
+            <div class="light-stat">
+                <div class="light-stat-number" id="lightTotal">0</div>
+                <div class="light-stat-label">Total Lights</div>
+            </div>
+            <div class="light-stat">
+                <div class="light-stat-number" id="lightOn">0</div>
+                <div class="light-stat-label">ON</div>
+            </div>
+            <div class="light-stat">
+                <div class="light-stat-number" id="lightOff">0</div>
+                <div class="light-stat-label">OFF</div>
+            </div>
+        </div>
+
+        <div class="light-add-box">
+            <b style="font-size:12px;color:#102448">Add your own lights</b>
+
+            <label class="light-label">How many lights do you want?</label>
+            <input class="light-input" id="lightQuantity"
+                   type="number" min="1" max="100" value="1"
+                   placeholder="Example: 5">
+
+            <label class="light-label">Room</label>
+            <select class="light-select" id="lightRoom">
+                <option>Bedroom</option>
+                <option>Living Room</option>
+                <option>Kitchen</option>
+                <option>Bathroom</option>
+                <option>Other</option>
+            </select>
+
+            <button class="light-primary" onclick="addMultipleLights()">
+                + Add Lights
+            </button>
+        </div>
+
+        <div class="light-list" id="lightList"></div>
+
+    </div>
+</div>
+
+
+<!-- ================= REFERRAL MODAL ================= -->
+
+<div class="referral-modal" id="referralModal" onclick="closeReferral(event)">
+  <div class="referral-panel" onclick="event.stopPropagation()">
+
+    <div class="referral-head">
+      <h2>🎁 Refer a Friend</h2>
+      <button class="referral-close" onclick="closeReferral()">×</button>
+    </div>
+
+    <div class="referral-card">
+      <h3>Invite Friends to Smart Home</h3>
+      <p>Share your referral link with friends and family.</p>
+
+      <div class="referral-code" id="referralCode">------</div>
+
+      <div style="font-size:9px">
+        Your Referral Code
+      </div>
+    </div>
+
+    <input
+      class="referral-link"
+      id="referralLink"
+      readonly
+    >
+
+    <div class="referral-actions">
+
+      <button class="ref-btn primary"
+              onclick="copyReferralLink()">
+        📋 Copy Link
+      </button>
+
+      <button class="ref-btn green"
+              onclick="shareReferralLink()">
+        📤 Share
+      </button>
+
+    </div>
+
+    <div class="social-share-title">Share directly</div>
+    <div class="social-share">
+      <button class="social-btn whatsapp" onclick="shareToWhatsApp()">
+        🟢 WhatsApp
+      </button>
+      <button class="social-btn facebook" onclick="shareToFacebook()">
+        🔵 Facebook
+      </button>
+    </div>
+
+    <div class="referral-actions">
+
+      <button class="ref-btn secondary"
+              onclick="copyReferralCode()">
+        🔢 Copy Code
+      </button>
+
+      <button class="ref-btn secondary"
+              onclick="showReferralInfo()">
+        ℹ️ How It Works
+      </button>
+
+    </div>
+
+    <div class="ref-stats">
+
+      <div class="ref-stat">
+        <strong id="refTotal">0</strong>
+        <span>Total Invites</span>
+      </div>
+
+      <div class="ref-stat">
+        <strong id="refJoined">0</strong>
+        <span>Joined</span>
+      </div>
+
+      <div class="ref-stat">
+        <strong id="refPending">0</strong>
+        <span>Pending</span>
+      </div>
+
+    </div>
+
+    <div class="ref-info" id="refInfo">
+      Share the link. When your friend opens it,
+      the app can use your referral code during
+      sign-up. This version stores referral data
+      locally on this device.
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- ADD MENU -->
+<div class="add-menu" id="addMenu" onclick="closeAddMenu(event)">
+  <div class="add-sheet">
+    <div class="add-head">
+      <h3>➕ Add</h3>
+      <button class="add-close" onclick="closeAddMenu()">×</button>
+    </div>
+    <div class="add-grid">
+      <div class="add-option" onclick="openReferral();closeAddMenu()">
+        <div class="ico">🎁</div><b>Refer a Friend</b><span>Share your app referral link</span>
+      </div>
+      <div class="add-option" onclick="openAddDevice();closeAddMenu()">
+        <div class="ico">📱</div><b>Add Device</b><span>Add Light, Fan, TV, AC etc.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= ADD DEVICE MODAL ================= -->
+<div class="device-modal" id="deviceModal" onclick="closeAddDevice(event)">
+  <div class="device-panel" onclick="event.stopPropagation()">
+    <div class="device-head">
+      <h2>📱 Add Device</h2>
+      <button class="device-close" onclick="closeAddDevice()">×</button>
+    </div>
+
+    <div class="device-tabs">
+      <button class="device-tab active" data-device-tab="add" onclick="showDeviceTab('add')">➕ Add Device</button>
+      <button class="device-tab" data-device-tab="qr" onclick="showDeviceTab('qr');prepareDeviceQr()">▦ QR Code</button>
+      <button class="device-tab" data-device-tab="scan" onclick="showDeviceTab('scan');startQrScanner()">📷 Scan QR</button>
+      <button class="device-tab" data-device-tab="add" onclick="showDeviceTab('add')">💡 Manual</button>
+    </div>
+
+    <div id="addDeviceTab" class="device-box">
+      <label class="device-label">Device Name</label>
+      <input class="device-input" id="newDeviceName" placeholder="Example: Bedroom Light">
+
+      <label class="device-label">Device Type</label>
+      <select class="device-select" id="newDeviceType">
+        <option>Light</option>
+        <option>Fan</option>
+        <option>TV</option>
+        <option>AC</option>
+        <option>Socket</option>
+        <option>Geyser</option>
+      </select>
+
+      <label class="device-label">Room</label>
+      <select class="device-select" id="newDeviceRoom">
+        <option>Bedroom</option>
+        <option>Living Room</option>
+        <option>Kitchen</option>
+        <option>Bathroom</option>
+        <option>Other</option>
+      </select>
+
+      <button class="device-primary" onclick="saveNewDevice()">＋ Add Device</button>
+    </div>
+
+    <div id="deviceQrTab" class="device-box" style="display:none">
+      <div class="qr-wrap">
+        <div id="deviceQr"></div>
+        <div class="qr-code-text" id="qrPayloadText">Fill device details, then generate QR.</div>
+      </div>
+      <button class="device-primary" onclick="makeDeviceQr()">▦ Generate QR Code</button>
+    </div>
+
+    <div id="deviceScanTab" class="device-box" style="display:none">
+      <div class="scanner-wrap"><div id="qrScanner"></div></div>
+      <div class="scan-actions">
+        <button class="scan-btn primary" onclick="startQrScanner()">📷 Start Scanner</button>
+        <button class="scan-btn" onclick="stopQrScanner()">⏹ Stop</button>
+      </div>
+      <label class="device-label">Scanned QR Data</label>
+      <input class="device-input" id="scannedQrResult" readonly placeholder="Scan a QR code...">
+      <button class="device-primary" onclick="useScannedDevice()">✓ Use Scanned Device</button>
+      <div class="scanner-note">
+        📷 Camera permission দিতে হবে। Mobile browser-এ HTTPS website বা localhost ব্যবহার করুন।
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= VOICE CONTROL MODAL ================= -->
+<div class="voice-modal" id="voiceModal" onclick="closeVoiceControl(event)">
+  <div class="voice-panel" onclick="event.stopPropagation()">
+    <div class="voice-head">
+      <h2>🎙️ Voice Control</h2>
+      <button class="voice-close" onclick="closeVoiceControl()">×</button>
+    </div>
+
+    <div class="voice-status">
+      <button class="voice-mic" id="voiceMic" onclick="startVoiceControl()">🎙️</button>
+      <div class="voice-text" id="voiceStatusTitle">Ready</div>
+      <div class="voice-command" id="voiceStatusDetail">Tap the microphone and speak.</div>
+    </div>
+
+    <div class="voice-result">
+      <div class="voice-result-title">Last command</div>
+      <div class="voice-result-text" id="voiceLastCommand">—</div>
+    </div>
+
+    <div class="voice-actions">
+      <button class="voice-btn primary" onclick="startVoiceControl()">🎙️ Speak</button>
+      <button class="voice-btn secondary" onclick="stopVoiceControl()">⏹ Stop</button>
+    </div>
+
+    <div class="voice-help">
+      <b>Try saying:</b><br>
+      • “Turn on Light”<br>
+      • “Turn off Light”<br>
+      • “Turn on Fan”<br>
+      • “Turn off Fan”<br>
+      • “Turn on TV / AC / Socket / Geyser”
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= SCHEDULE MODAL ================= -->
+<div class="schedule-modal" id="scheduleModal" onclick="closeSchedule(event)">
+  <div class="schedule-panel" onclick="event.stopPropagation()">
+    <div class="schedule-head">
+      <h2>🕐 Set Schedule</h2>
+      <button class="schedule-close" onclick="closeSchedule()">×</button>
+    </div>
+
+    <div class="schedule-box">
+      <label class="schedule-label">Device</label>
+      <select class="schedule-select" id="scheduleDevice">
+        <option>Light 1</option>
+        <option>Fan</option>
+        <option>TV</option>
+        <option>AC</option>
+        <option>Socket</option>
+        <option>Geyser</option>
+      </select>
+
+      <div class="schedule-row">
+        <div>
+          <label class="schedule-label">Date</label>
+          <input class="schedule-input" id="scheduleDate" type="date">
+        </div>
+        <div>
+          <label class="schedule-label">Time</label>
+          <input class="schedule-input" id="scheduleTime" type="time">
+        </div>
+      </div>
+
+      <label class="schedule-label">Action</label>
+      <select class="schedule-select" id="scheduleAction">
+        <option>ON</option>
+        <option>OFF</option>
+      </select>
+
+      <button class="schedule-btn" onclick="saveSchedule()">＋ Save Schedule</button>
+    </div>
+
+    <div class="schedule-list" id="scheduleList"></div>
+  </div>
+</div>
+
+
+<!-- ================= TIMER MODAL ================= -->
+<div class="timer-modal" id="timerModal" onclick="closeTimer(event)">
+  <div class="timer-panel" onclick="event.stopPropagation()">
+    <div class="timer-head">
+      <h2>⏱️ Timer</h2>
+      <button class="timer-close" onclick="closeTimer()">×</button>
+    </div>
+
+    <div class="timer-display">
+      <div class="num" id="timerDisplay">00:00</div>
+      <div class="state" id="timerState">Set minutes and seconds</div>
+    </div>
+
+    <div class="timer-box">
+      <label class="timer-label">Device</label>
+      <select class="timer-select" id="timerDevice">
+        <option>Light 1</option>
+        <option>Fan</option>
+        <option>TV</option>
+        <option>AC</option>
+        <option>Socket</option>
+        <option>Geyser</option>
+      </select>
+
+      <label class="timer-label">Timer শেষে কী হবে?</label>
+      <select class="timer-select" id="timerAction">
+        <option>OFF</option>
+        <option>ON</option>
+      </select>
+
+      <div class="timer-row">
+        <div>
+          <label class="timer-label">Minutes</label>
+          <input class="timer-input" id="timerMinutes" type="number" min="0" max="1440" value="1" oninput="timerInputChanged()">
+        </div>
+        <div>
+          <label class="timer-label">Seconds</label>
+          <input class="timer-input" id="timerSeconds" type="number" min="0" max="59" value="0" oninput="timerInputChanged()">
+        </div>
+      </div>
+
+      <button class="timer-btn" id="startTimerBtn" onclick="startTimer()">▶ Start Timer</button>
+      <button class="timer-btn stop" onclick="stopTimer()">⏹ Stop Timer</button>
+    </div>
+
+    <div class="timer-active">
+      উদাহরণ: <b>Light 1 → OFF → 5 minutes</b> দিলে ৫ মিনিট পরে Light 1 OFF হবে।
+    </div>
+  </div>
+</div>
+
+
+<!-- ================= FAN MANAGER ================= -->
+
+<div class="light-modal" id="fanModal" onclick="closeFanManager(event)">
+
+    <div class="light-panel" onclick="event.stopPropagation()">
+
+        <div class="light-head">
+
+            <h2>🌀 My Fans</h2>
+
+            <button class="light-close" onclick="closeFanManager()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="light-summary">
+
+            <div class="light-stat">
+                <div class="light-stat-number" id="fanTotal">0</div>
+                <div class="light-stat-label">TOTAL FANS</div>
+            </div>
+
+            <div class="light-stat">
+                <div class="light-stat-number" id="fanOn">0</div>
+                <div class="light-stat-label">ON</div>
+            </div>
+
+            <div class="light-stat">
+                <div class="light-stat-number" id="fanOff">0</div>
+                <div class="light-stat-label">OFF</div>
+            </div>
+
+        </div>
+
+        <div class="light-add-box">
+
+            <label class="light-label">
+                কতটি Fan যোগ করবেন?
+            </label>
+
+            <input
+                class="light-input"
+                id="fanQuantity"
+                type="number"
+                min="1"
+                max="100"
+                value="1"
+                inputmode="numeric"
+            >
+
+            <label class="light-label">
+                কোন Room-এ?
+            </label>
+
+            <select class="light-select" id="fanRoom">
+                <option>Bedroom</option>
+                <option>Living Room</option>
+                <option>Kitchen</option>
+                <option>Bathroom</option>
+                <option>Other</option>
+            </select>
+
+            <button class="light-primary" onclick="addMultipleFans()">
+                + Add Fans
+            </button>
+
+        </div>
+
+        <div class="light-list" id="fanList"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TV MANAGEMENT MODAL ================= -->
+<div class="light-modal" id="tvModal" onclick="closeTVManager(event)"><div class="light-panel" onclick="event.stopPropagation()">
+<div class="light-head"><h2>📺 My TVs</h2><button class="light-close" onclick="closeTVManager()">×</button></div>
+<div class="light-summary"><div class="light-stat"><div class="light-stat-number" id="tvTotal">0</div><div class="light-stat-label">Total TVs</div></div><div class="light-stat"><div class="light-stat-number" id="tvOn">0</div><div class="light-stat-label">ON</div></div><div class="light-stat"><div class="light-stat-number" id="tvOff">0</div><div class="light-stat-label">OFF</div></div></div>
+<div class="light-add-box"><b style="font-size:12px;color:#102448">Add your own TVs</b><label class="light-label">How many TVs do you want?</label><input class="light-input" id="tvQuantity" type="number" min="1" max="100" value="1" placeholder="Example: 3"><label class="light-label">Room</label><select class="light-select" id="tvRoom"><option>Living Room</option><option>Bedroom</option><option>Kitchen</option><option>Other</option></select><button class="light-primary" onclick="addMultipleTVs()">➕ Add TVs</button></div>
+<div class="light-list" id="tvList"></div></div></div>
+
+<style>
+.three-menu{position:fixed;top:58px;left:12px;width:190px;background:white;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:8px;z-index:9999;display:none}.three-menu.show{display:block}.three-item{padding:12px;border-radius:10px;font-size:14px;color:#102448;cursor:pointer}.three-item:active{background:#eef5ff}
+</style>
+
+<!-- ================= PROFILE MODAL ================= -->
+<style>
+.profile-modal{position:fixed;inset:0;background:rgba(8,25,50,.45);display:none;align-items:center;justify-content:center;z-index:10000;padding:18px}
+.profile-modal.show{display:flex}
+.profile-panel{width:min(390px,100%);background:#fff;border-radius:20px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.25);text-align:center}
+.profile-photo-wrap{position:relative;width:110px;height:110px;margin:4px auto 12px}
+.profile-photo{width:110px;height:110px;border-radius:50%;object-fit:cover;background:#eef4ff;border:4px solid #e6efff}
+.profile-camera{position:absolute;right:0;bottom:0;width:34px;height:34px;border:0;border-radius:50%;background:#1978f5;color:white;cursor:pointer;font-size:17px}
+.profile-input{width:100%;height:44px;border:1px solid #dce5ef;border-radius:11px;padding:0 12px;font-size:13px;margin:8px 0;box-sizing:border-box}
+.profile-save{width:100%;height:44px;border:0;border-radius:11px;background:#1978f5;color:white;font-weight:700;margin-top:8px;cursor:pointer}
+.profile-close{position:absolute;right:12px;top:10px;width:32px;height:32px;border:0;border-radius:50%;background:#eef3f9;font-size:20px;cursor:pointer}
+</style>
+<div class="profile-modal" id="profileModal" onclick="closeProfileMenu(event)">
+  <div class="profile-panel" onclick="event.stopPropagation()" style="position:relative">
+    <button class="profile-close" onclick="closeProfileMenu()">×</button>
+    <h2 style="margin:0 0 15px;color:#102448">👤 My Profile</h2>
+    <div class="profile-photo-wrap">
+      <img id="profilePhoto" class="profile-photo" alt="Profile Photo">
+      <label class="profile-camera">📷<input type="file" accept="image/*" onchange="previewProfilePhoto(this)" style="display:none"></label>
+    </div>
+    <div style="font-size:11px;color:#718096;margin-bottom:8px">নিজের ছবি যোগ করুন</div>
+    <input id="profileName" class="profile-input" placeholder="Your Name">
+    <button class="profile-save" onclick="saveProfile()">💾 Save Profile</button>
+  </div>
+</div>
+
+
+<div class="three-menu" id="threeMenu">
+  <button type="button" onclick="menuProfile()">👤 <span>Profile</span></button>
+  <button type="button" onclick="menuOrders()">📦 <span>Orders</span></button>
+  <button type="button" onclick="menuSeller()">🏪 <span>Become a Seller</span></button>
+  <button type="button" onclick="menuWishlist()">❤️ <span>Wishlist</span></button>
+  <button type="button" onclick="menuRewards()">🎁 <span>Rewards</span></button>
+  <button type="button" onclick="menuWallet()">💰 <span>Wallet</span></button>
+  <button type="button" onclick="menuGiftCards()">💳 <span>Gift Cards</span></button>
+  <button type="button" onclick="menuHelp()">❓ <span>Help</span></button>
+  <button type="button" onclick="menuSettings()">⚙️ <span>Settings</span></button>
+  <button type="button" onclick="smartHomeLogout()">🚪 <span>Logout</span></button>
+</div>
+
+<script>
+function openThreeDotMenu(){document.getElementById('threeMenu').classList.toggle('show')}
+function closeThreeDotMenu(){document.getElementById('threeMenu').classList.remove('show')}
+function openProfileMenu(){
+  closeThreeDotMenu();
+  const m=document.getElementById('profileModal');
+  if(m) m.classList.add('show');
+  loadProfileData();
+}
+function closeProfileMenu(e){
+  if(e && e.target!==e.currentTarget) return;
+  const m=document.getElementById('profileModal');
+  if(m) m.classList.remove('show');
+}
+function loadProfileData(){
+  const data=JSON.parse(localStorage.getItem('smartHomeProfile')||'{}');
+  const img=document.getElementById('profilePhoto');
+  const name=document.getElementById('profileName');
+  if(name) name.value=data.name||'';
+  if(img) img.src=data.photo||'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns=\"http://www.w3.org/2000/svg\" width=120 height=120><rect width=120 height=120 rx=60 fill=\"#eaf2ff\"/><text x=60 y=70 text-anchor=\"middle\" font-size=52>👤</text></svg>');
+}
+function saveProfile(){
+  const name=document.getElementById('profileName').value.trim();
+  const img=document.getElementById('profilePhoto');
+  const old=JSON.parse(localStorage.getItem('smartHomeProfile')||'{}');
+  localStorage.setItem('smartHomeProfile',JSON.stringify({name:name,photo:img.src}));
+  const p=document.querySelector('.profile');
+  if(p) p.innerHTML='<img src=\"'+img.src+'\" style=\"width:32px;height:32px;border-radius:50%;object-fit:cover;\">';
+  alert('Profile saved');
+}
+function previewProfilePhoto(input){
+  if(!input.files||!input.files[0]) return;
+  const reader=new FileReader();
+  reader.onload=function(e){document.getElementById('profilePhoto').src=e.target.result;};
+  reader.readAsDataURL(input.files[0]);
+}
+
+function openSettingsMenu(){closeThreeDotMenu();alert('Settings')}
+function openHelpMenu(){
+  closeThreeDotMenu();
+  const m=document.getElementById('helpModal');
+  if(m) m.classList.add('show');
+}
+function closeHelpMenu(e){
+  if(e && e.target!==e.currentTarget) return;
+  const m=document.getElementById('helpModal');
+  if(m) m.classList.remove('show');
+}
+document.addEventListener('click',function(e){const m=document.getElementById('threeMenu');const b=document.querySelector('.menu');if(m&&m.classList.contains('show')&&!m.contains(e.target)&&!b.contains(e.target))m.classList.remove('show')});
+
+
+</script>
+
+<script id="mobile-view-js">
+function toggleMobileView(){
+    document.body.classList.toggle("mobile-view");
+    const enabled = document.body.classList.contains("mobile-view");
+    localStorage.setItem("smartHomeMobileView", enabled ? "1" : "0");
+    closeThreeDotMenu();
+    if(typeof showToast === "function"){
+        showToast(enabled ? "📱 Mobile View ON" : "🖥️ Normal View ON");
+    }
+}
+(function(){
+    try{
+        if(localStorage.getItem("smartHomeMobileView")==="1"){
+            document.body.classList.add("mobile-view");
+        }
+    }catch(e){}
+})();
+</script>
+
+
+<!-- ROOM SHOP -->
+<div class="room-shop-modal" id="roomShopModal" onclick="closeRoomShop(event)">
+  <div class="room-shop-panel" onclick="event.stopPropagation()">
+    <div class="room-shop-head">
+      <h2 id="roomShopTitle">🛍️ Smart Home Shop</h2>
+      <button class="room-shop-close" type="button" onclick="closeRoomShop()">×</button>
+    </div>
+    
+    <div class="buy-sell-tabs" id="buySellTabs">
+      <button type="button" class="bs-tab active" onclick="showBuyTab()">🛒 Buy</button>
+      <button type="button" class="bs-tab" onclick="showSellTab()">🏪 Sell</button>
+    </div>
+
+    <div id="sellPanel" class="sell-panel" style="display:none;">
+      <h3>🏪 Sell / Add Product</h3>
+      <div class="sell-grid">
+        <input id="sellName" placeholder="Product name">
+        <input id="sellPrice" type="number" min="0" placeholder="Price ₹">
+        <input id="sellStock" type="number" min="0" placeholder="Stock quantity">
+        <select id="sellCategory">
+          <option value="Smart Home">Smart Home</option>
+          <option value="Light">Light</option>
+          <option value="Fan">Fan</option>
+          <option value="TV">TV</option>
+          <option value="AC">AC</option>
+          <option value="Socket">Socket</option>
+          <option value="Geyser">Geyser</option>
+        </select>
+        <select id="sellRoom">
+          <option>All Rooms</option><option>Bedroom</option><option>Living</option>
+          <option>Kitchen</option><option>Bathroom</option><option>Other</option>
+        </select>
+        <input id="sellIcon" placeholder="Icon (e.g. 💡)">
+        <textarea id="sellDesc" placeholder="Product description"></textarea>
+      </div>
+      <button class="sell-add-btn" type="button" onclick="addSellerProduct()">➕ Add Product for Sale</button>
+      <div id="sellerProducts"></div>
+    </div>
+
+    <input class="shop-search" id="shopSearch" type="search" placeholder="Search products..." oninput="renderRoomProducts()">
+    <div class="shop-grid" id="shopGrid"></div>
+    <div class="cart-bar">
+      <span>🛒 Cart: <b id="cartCount">0</b> item(s)</span>
+      <button class="cart-buy" type="button" onclick="checkoutCart()">Buy Cart</button>
+    </div>
+  </div>
+</div>
+
+
+<script id="room-shop-js">
+const roomProducts = [
+ {name:"Smart LED Light",rooms:["All Rooms","Bedroom","Living","Kitchen","Bathroom","Other"],icon:"💡",price:499,desc:"Wi-Fi smart LED light"},
+ {name:"Smart Fan Controller",rooms:["All Rooms","Bedroom","Living"],icon:"🌀",price:899,desc:"Control your fan from phone"},
+ {name:"Smart TV Controller",rooms:["All Rooms","Living"],icon:"📺",price:699,desc:"Smart TV control module"},
+ {name:"Smart AC Controller",rooms:["All Rooms","Bedroom","Living"],icon:"❄️",price:999,desc:"Control AC with your mobile"},
+ {name:"Smart Socket",rooms:["All Rooms","Bedroom","Living","Kitchen","Other"],icon:"🔌",price:599,desc:"Smart ON/OFF socket"},
+ {name:"Smart Geyser Controller",rooms:["All Rooms","Bathroom"],icon:"🚿",price:1199,desc:"Smart geyser control module"}
+];
+let selectedShopRoom="All Rooms";
+let shopCart=[];
+
+function openRoomShop(room){
+    selectedShopRoom = room || "All Rooms";
+    const modal = document.getElementById("roomShopModal");
+    const title = document.getElementById("roomShopTitle");
+    const search = document.getElementById("shopSearch");
+    if(!modal) return;
+    if(title) title.textContent = "🛍️ " + selectedShopRoom + " Shop";
+    if(search) search.value = "";
+
+    document.querySelectorAll("#roomsBar .room").forEach(btn=>{
+        btn.classList.toggle("active", btn.textContent.replace(/\s+/g," ").trim().includes(selectedShopRoom));
+    });
+
+    renderRoomProducts();
+    modal.classList.add("show");
+}
+
+function closeRoomShop(event){
+    if(event && event.target !== event.currentTarget) return;
+    const modal=document.getElementById("roomShopModal");
+    if(modal) modal.classList.remove("show");
+}
+
+function renderRoomProducts(){
+    const grid=document.getElementById("shopGrid");
+    if(!grid) return;
+
+    const input=document.getElementById("shopSearch");
+    const q=(input ? input.value : "").toLowerCase().trim();
+
+    const products=roomProducts.filter(p=>{
+        const roomOk = selectedShopRoom==="All Rooms"
+            ? p.rooms.includes("All Rooms")
+            : p.rooms.includes(selectedShopRoom);
+        const textOk = !q || (p.name+" "+p.desc).toLowerCase().includes(q);
+        return roomOk && textOk;
+    });
+
+    grid.innerHTML = products.length ? products.map(p=>{
+        const index=roomProducts.indexOf(p);
+        return `
+        <div class="shop-card">
+            <div class="shop-img">${p.icon}</div>
+            <h3>${p.name}</h3>
+            <p>${p.desc}</p>
+            <div class="shop-price">₹${p.price.toLocaleString("en-IN")}</div>
+            <div class="shop-actions">
+                <button class="shop-btn shop-cart" type="button" onclick="addToCart(${index})">🛒 Cart</button>
+                <button class="shop-btn shop-buy" type="button" onclick="buyProduct(${index})">Buy Now</button>
+            </div>
+        </div>`;
+    }).join("") :
+    '<div style="grid-column:1/-1;background:#fff;border-radius:14px;padding:25px;text-align:center;color:#718199;font-size:12px">এই Room-এর জন্য কোনো Product পাওয়া যায়নি।</div>';
+
+    updateCartCount();
+}
+
+function addToCart(index){
+    const p=roomProducts[index];
+    if(!p) return;
+    shopCart.push(p);
+    updateCartCount();
+    if(typeof showToast==="function") showToast(p.name+" added to cart");
+    else alert(p.name+" cart-এ যোগ হয়েছে।");
+}
+
+function updateCartCount(){
+    const el=document.getElementById("cartCount");
+    if(el) el.textContent=shopCart.length;
+}
+
+function buyProduct(index){
+    const p=roomProducts[index];
+    if(!p) return;
+    alert("Order: "+p.name+"\nPrice: ₹"+p.price.toLocaleString("en-IN")+"\n\nএখন Demo Order তৈরি হয়েছে। আসল Customer Order/Payment-এর জন্য Backend ও Payment Gateway যোগ করতে হবে।");
+}
+
+function checkoutCart(){
+    if(!shopCart.length){
+        alert("Cart খালি আছে।");
+        return;
+    }
+    const total=shopCart.reduce((sum,p)=>sum+p.price,0);
+    alert("Cart Items: "+shopCart.length+"\nTotal: ₹"+total.toLocaleString("en-IN")+"\n\nএখন Demo Checkout।");
+}
+
+document.addEventListener("keydown",function(e){
+    if(e.key==="Escape") closeRoomShop();
+});
+</script>
+
+
+<script id="buy-sell-js">
+const SELL_KEY = "smartHomeSellerProducts";
+let sellerProducts = [];
+try { sellerProducts = JSON.parse(localStorage.getItem(SELL_KEY) || "[]"); } catch(e){ sellerProducts=[]; }
+
+function showBuyTab(){
+  document.querySelectorAll(".bs-tab").forEach((b,i)=>b.classList.toggle("active",i===0));
+  const s=document.getElementById("sellPanel"), g=document.getElementById("shopGrid");
+  const search=document.getElementById("shopSearch");
+  if(s)s.style.display="none";
+  if(g)g.style.display="";
+  if(search)search.style.display="";
+  renderRoomProducts();
+}
+function showSellTab(){
+  document.querySelectorAll(".bs-tab").forEach((b,i)=>b.classList.toggle("active",i===1));
+  const s=document.getElementById("sellPanel"), g=document.getElementById("shopGrid");
+  const search=document.getElementById("shopSearch");
+  if(s)s.style.display="";
+  if(g)g.style.display="none";
+  if(search)search.style.display="none";
+  renderSellerProducts();
+}
+function addSellerProduct(){
+  const name=document.getElementById("sellName").value.trim();
+  const price=Number(document.getElementById("sellPrice").value);
+  const stock=Number(document.getElementById("sellStock").value);
+  const category=document.getElementById("sellCategory").value;
+  const room=document.getElementById("sellRoom").value;
+  const icon=document.getElementById("sellIcon").value.trim() || "🏠";
+  const desc=document.getElementById("sellDesc").value.trim() || "Smart Home product";
+  if(!name || !price || price<0 || stock<0){ alert("Product name, price এবং stock দিন।"); return; }
+  sellerProducts.push({id:Date.now(),name,price,stock,category,room,icon,desc,rooms:[room]});
+  localStorage.setItem(SELL_KEY,JSON.stringify(sellerProducts));
+  ["sellName","sellPrice","sellStock","sellIcon","sellDesc"].forEach(id=>document.getElementById(id).value="");
+  renderSellerProducts();
+  alert("Product Sell List-এ যোগ হয়েছে।");
+}
+function renderSellerProducts(){
+  const box=document.getElementById("sellerProducts");
+  if(!box)return;
+  if(!sellerProducts.length){box.innerHTML='<div style="text-align:center;padding:12px;color:#64748b;font-size:12px">এখনও কোনো Sell Product নেই।</div>';return;}
+  box.innerHTML='<div style="font-weight:800;margin-top:12px">📦 My Products</div>'+
+    sellerProducts.map(p=>`<div class="seller-item"><span>${p.icon} <b>${escapeHtmlSell(p.name)}</b><br>₹${Number(p.price).toLocaleString("en-IN")} • Stock: ${p.stock} • ${p.room}</span><button type="button" onclick="deleteSellerProduct(${p.id})">Delete</button></div>`).join("");
+}
+function deleteSellerProduct(id){
+  sellerProducts=sellerProducts.filter(p=>p.id!==id);
+  localStorage.setItem(SELL_KEY,JSON.stringify(sellerProducts));
+  renderSellerProducts();
+}
+function escapeHtmlSell(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+</script>
+
+
+<script id="sell-3dot-js">
+function openSellFromThreeDot(){
+  if(typeof closeThreeDotMenu==="function") closeThreeDotMenu();
+  const modal=document.getElementById("roomShopModal");
+  if(modal){
+    modal.classList.add("show");
+    if(typeof showSellTab==="function") showSellTab();
+  }
+}
+</script>
+
+<script id="final-three-menu-js">
+function closeMenuFinal(){
+  if(typeof closeThreeDotMenu==="function") closeThreeDotMenu();
+  const m=document.getElementById("threeMenu");
+  if(m)m.classList.remove("show");
+}
+function menuProfile(){
+  closeMenuFinal();
+  if(typeof openProfileMenu==="function") openProfileMenu();
+  else if(typeof openProfile==="function") openProfile();
+  else alert("Profile");
+}
+function menuOrders(){ closeMenuFinal(); alert("📦 Orders"); }
+function menuSeller(){
+  closeMenuFinal();
+  const modal=document.getElementById("roomShopModal");
+  if(modal){
+    modal.classList.add("show");
+    if(typeof showSellTab==="function") showSellTab();
+  }else alert("🏪 Become a Seller");
+}
+function menuWishlist(){ closeMenuFinal(); alert("❤️ Wishlist"); }
+function menuRewards(){ closeMenuFinal(); alert("🎁 Rewards"); }
+function menuGiftCards(){ closeMenuFinal(); alert("💳 Gift Cards"); }
+function menuHelp(){
+  closeMenuFinal();
+  if(typeof openHelpMenu==="function") openHelpMenu();
+  else alert("❓ Help");
+}
+function menuSettings(){
+  closeMenuFinal();
+  if(typeof openSettingsMenu==="function") openSettingsMenu();
+  else alert("⚙️ Settings");
+}
+</script>
+
+<script id="room-buy-only-js">
+(function(){
+  const oldOpen = window.openRoomShop;
+  if(typeof oldOpen === "function"){
+    window.openRoomShop = function(room){
+      oldOpen(room);
+      const sell=document.getElementById("sellPanel");
+      const grid=document.getElementById("shopGrid");
+      const search=document.getElementById("shopSearch");
+      if(sell) sell.style.display="none";
+      if(grid) grid.style.display="";
+      if(search) search.style.display="";
+      document.querySelectorAll(".bs-tab").forEach((b,i)=>b.classList.toggle("active",i===0));
+    };
+  }
+})();
+</script>
+
+<style id="FINAL-CLEANUP-STYLE">
+/* ===== FINAL MENU FIX ===== */
+#threeMenu{
+  position:fixed !important;
+  top:58px !important;
+  right:12px !important;
+  left:auto !important;
+  width:225px !important;
+  max-width:calc(100vw - 24px) !important;
+  background:#fff !important;
+  border:1px solid #e1e8f0 !important;
+  border-radius:16px !important;
+  padding:7px !important;
+  box-shadow:0 14px 40px rgba(15,35,65,.22) !important;
+  z-index:20000 !important;
+  display:none !important;
+}
+#threeMenu.show{display:block !important}
+#threeMenu button{
+  width:100% !important;
+  min-height:43px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  border:0 !important;
+  background:#fff !important;
+  color:#102448 !important;
+  padding:10px 11px !important;
+  border-radius:10px !important;
+  font:700 12px Arial,Helvetica,sans-serif !important;
+  text-align:left !important;
+  cursor:pointer !important;
+}
+#threeMenu button:hover,
+#threeMenu button:active{background:#eef5ff !important}
+#threeMenu button span{flex:1 !important}
+
+/* Prevent hidden helper items from ever appearing */
+.three-item{display:none !important}
+
+/* Make all main modals mutually exclusive */
+.room-shop-modal,
+.profile-modal,
+.help-modal,
+.device-modal,
+.voice-modal,
+.schedule-modal,
+.timer-modal{z-index:12000}
+
+/* Shop should never appear by itself on fresh load */
+#roomShopModal:not(.show){display:none !important}
+#profileModal:not(.show){display:none !important}
+#helpModal:not(.show){display:none !important}
+
+/* Better desktop preview */
+@media(min-width:601px){
+  body{background:#dfe7f1}
+  .app{box-shadow:0 10px 40px rgba(0,0,0,.12)}
+}
+
+/* Small phones */
+@media(max-width:430px){
+  #threeMenu{
+    top:55px !important;
+    right:8px !important;
+    width:220px !important;
+  }
+}
+</style>
+
+<script id="FINAL-CLEANUP-JS">
+(function(){
+  function hideModal(id){
+    const el=document.getElementById(id);
+    if(el) el.classList.remove('show');
+  }
+
+  const originalOpenThree =
+    window.openThreeDotMenu;
+
+  window.openThreeDotMenu=function(){
+    hideModal('roomShopModal');
+    hideModal('profileModal');
+    hideModal('helpModal');
+
+    const m=document.getElementById('threeMenu');
+    if(!m) return;
+    m.classList.toggle('show');
+  };
+
+  window.closeThreeDotMenu=function(){
+    const m=document.getElementById('threeMenu');
+    if(m) m.classList.remove('show');
+  };
+
+  // Opening Shop closes the three-dot menu.
+  const originalRoomShop=window.openRoomShop;
+  if(typeof originalRoomShop==='function'){
+    window.openRoomShop=function(room){
+      window.closeThreeDotMenu();
+      originalRoomShop(room);
+    };
+  }
+
+  // Seller menu opens the seller section only.
+  window.menuSeller=function(){
+    window.closeThreeDotMenu();
+    hideModal('profileModal');
+    hideModal('helpModal');
+
+    const modal=document.getElementById('roomShopModal');
+    if(modal) modal.classList.add('show');
+
+    if(typeof showSellTab==='function') showSellTab();
+  };
+
+  window.menuProfile=function(){
+    window.closeThreeDotMenu();
+    if(typeof openProfileMenu==='function') openProfileMenu();
+  };
+
+  window.menuHelp=function(){
+    window.closeThreeDotMenu();
+    if(typeof openHelpMenu==='function') openHelpMenu();
+  };
+
+  window.menuSettings=function(){
+    window.closeThreeDotMenu();
+    if(typeof openSettingsMenu==='function') openSettingsMenu();
+  };
+
+  // Close menu if Escape is pressed.
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') window.closeThreeDotMenu();
+  });
+
+  // Safety: never leave the three-dot menu open after a fresh reload.
+  window.addEventListener('load',function(){
+    window.closeThreeDotMenu();
+  });
+})();
+</script>
+
+
+<script id="perfect-menu-behaviour">
+document.addEventListener("click", function(e){
+  const menu = document.getElementById("threeMenu");
+  const trigger = document.querySelector(".menu");
+  if(!menu || !menu.classList.contains("show")) return;
+  if(!menu.contains(e.target) && !trigger?.contains(e.target)){
+    menu.classList.remove("show");
+  }
+});
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    const menu=document.getElementById("threeMenu");
+    if(menu) menu.classList.remove("show");
+  }
+});
+</script>
+
+
+<div class="notification-modal" id="notificationModal" onclick="closeNotifications(event)">
+  <div class="notification-panel" onclick="event.stopPropagation()">
+    <div class="notification-head">
+      <h2>🔔 Notifications</h2>
+      <button class="notification-close" onclick="closeNotifications()">×</button>
+    </div>
+    <div class="notification-list" id="notificationList"></div>
+    <div class="notification-actions">
+      <button class="notification-action primary" onclick="markAllNotificationsRead()">✓ Mark All Read</button>
+      <button class="notification-action" onclick="clearAllNotifications()">🗑 Clear All</button>
+    </div>
+  </div>
+</div>
+
+
+<script id="working-notification-js">
+const NOTIFICATION_KEY = "smartHomeNotifications";
+let smartNotifications = [];
+try {
+  smartNotifications = JSON.parse(localStorage.getItem(NOTIFICATION_KEY) || "[]");
+  if(!Array.isArray(smartNotifications)) smartNotifications=[];
+} catch(e){ smartNotifications=[]; }
+
+function saveNotifications(){
+  localStorage.setItem(NOTIFICATION_KEY, JSON.stringify(smartNotifications));
+  updateNotificationBadge();
+}
+function addNotification(title,message,icon="🔔"){
+  smartNotifications.unshift({
+    id:Date.now()+Math.random(),
+    title:String(title),
+    message:String(message),
+    icon:icon,
+    time:new Date().toISOString(),
+    read:false
+  });
+  smartNotifications=smartNotifications.slice(0,50);
+  saveNotifications();
+  renderNotifications();
+}
+function formatNotificationTime(iso){
+  const d=new Date(iso);
+  if(Number.isNaN(d.getTime())) return "";
+  return d.toLocaleString("en-IN",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+}
+function renderNotifications(){
+  const box=document.getElementById("notificationList");
+  if(!box)return;
+  if(!smartNotifications.length){
+    box.innerHTML='<div class="notification-empty">🔕 No notifications</div>';
+    return;
+  }
+  box.innerHTML=smartNotifications.map(n=>`
+    <div class="notification-item ${n.read?'':'unread'}">
+      <div class="notification-icon">${escapeNotification(n.icon)}</div>
+      <div>
+        <b>${escapeNotification(n.title)}</b>
+        <span>${escapeNotification(n.message)}</span>
+        <div class="notification-time">${formatNotificationTime(n.time)}</div>
+      </div>
+    </div>
+  `).join("");
+}
+function updateNotificationBadge(){
+  const bell=document.querySelector(".bell");
+  if(!bell)return;
+  const unread=smartNotifications.some(n=>!n.read);
+  bell.classList.toggle("no-notification",!unread);
+}
+function openNotifications(){
+  const m=document.getElementById("notificationModal");
+  if(m)m.classList.add("show");
+  renderNotifications();
+}
+function closeNotifications(e){
+  if(e && e.target!==e.currentTarget)return;
+  const m=document.getElementById("notificationModal");
+  if(m)m.classList.remove("show");
+}
+function markAllNotificationsRead(){
+  smartNotifications.forEach(n=>n.read=true);
+  saveNotifications();
+  renderNotifications();
+}
+function clearAllNotifications(){
+  smartNotifications=[];
+  saveNotifications();
+  renderNotifications();
+}
+function escapeNotification(s){
+  return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+/* Bell click */
+document.addEventListener("DOMContentLoaded",function(){
+  const bell=document.querySelector(".bell");
+  if(bell) bell.addEventListener("click",function(e){
+    e.stopPropagation();
+    openNotifications();
+  });
+  updateNotificationBadge();
+  renderNotifications();
+});
+
+/* Demo system notifications on first run */
+(function(){
+  const demoKey="smartHomeNotificationDemoAdded";
+  if(localStorage.getItem(demoKey)!=="1"){
+    addNotification("Smart Home Ready","Your Smart Home notification system is active.","🏠");
+    localStorage.setItem(demoKey,"1");
+  }
+})();
+
+/* Keyboard close */
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){
+    const m=document.getElementById("notificationModal");
+    if(m)m.classList.remove("show");
+  }
+});
+
+/* Make device actions create notifications when possible */
+const oldToggleDevice = window.toggleDevice;
+if(typeof oldToggleDevice==="function"){
+  window.toggleDevice=function(el,name){
+    oldToggleDevice.apply(this,arguments);
+    const on=el && el.classList.contains("on");
+    addNotification(name || "Device", (on?"Turned ON":"Turned OFF")+" successfully", on?"🟢":"⚪");
+  };
+}
+</script>
+
+
+<div class="wallet-modal" id="walletModal" onclick="closeWallet(event)">
+  <div class="wallet-panel" onclick="event.stopPropagation()">
+    <div class="wallet-head">
+      <h2>💰 My Wallet</h2>
+      <button class="wallet-close" onclick="closeWallet()">×</button>
+    </div>
+
+    <div class="wallet-balance">
+      <div class="amount" id="walletAmount">₹0.00</div>
+      <small>Wallet Balance</small>
+    </div>
+
+    <div class="wallet-card">
+      <h3>🎁 Redeem Gift Code</h3>
+      <input class="wallet-input" id="giftCodeInput" placeholder="Enter gift code">
+      <button class="wallet-btn" onclick="redeemGiftCode()">🎁 Redeem Code</button>
+      <div class="wallet-note">Valid gift code দিলে তার value wallet-এ যোগ হবে। একই code দ্বিতীয়বার ব্যবহার করা যাবে না।</div>
+    </div>
+
+    <div class="wallet-card">
+      <h3>👥 Referral Reward</h3>
+      <div class="wallet-note">তোমার referral দিয়ে একজন নতুন user সফলভাবে join করলে ₹10 reward wallet-এ যোগ হবে।</div>
+    </div>
+
+    <div class="wallet-card">
+      <h3>📲 Withdraw to PhonePe</h3>
+      <div class="wallet-note">PhonePe UPI ID দিন। Request secure backend-এ যাবে। Approved payout হলে টাকা UPI-তে পাঠানো হবে।</div>
+      <input class="wallet-input" id="phonePeUpi" placeholder="PhonePe UPI ID (example@upi)" autocomplete="off">
+      <input class="wallet-input" id="withdrawAmount" type="number" min="10" step="1" placeholder="Withdrawal amount ₹" style="margin-top:7px">
+      <button class="wallet-btn" onclick="requestPhonePeWithdraw()">📲 Withdraw Request</button>
+      <div class="wallet-note" id="withdrawStatus"></div>
+    </div>
+
+    <div class="wallet-card">
+      <h3>📋 Wallet History</h3>
+      <div class="wallet-history" id="walletHistory"></div>
+    </div>
+  </div>
+</div>
+
+
+<script id="wallet-referral-js">
+const API_BASE = localStorage.getItem("smartHomeApiBase") || "http://localhost:3000";
+let walletToken = localStorage.getItem("smartHomeWalletToken") || "";
+let walletUser = null;
+
+function walletHeaders(){
+  return {"Content-Type":"application/json", ...(walletToken?{"Authorization":"Bearer "+walletToken}:{})};
+}
+async function walletApi(path, options={}){
+  const res=await fetch(API_BASE+path,{...options,headers:{...walletHeaders(),...(options.headers||{})}});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.message||"Server error");
+  return data;
+}
+function walletMessage(msg){
+  const s=document.getElementById("withdrawStatus");
+  if(s)s.textContent=msg;
+  if(typeof showToast==="function")showToast(msg);
+}
+function updateWalletUI(data){
+  const a=document.getElementById("walletAmount");
+  if(a)a.textContent="₹"+Number(data?.balance||0).toFixed(2);
+  const h=document.getElementById("walletHistory");
+  if(!h)return;
+  const tx=data?.transactions||[];
+  const wd=data?.withdrawals||[];
+  const all=[
+    ...tx.map(t=>({title:t.title,amount:Number(t.amount),time:t.time,status:""})),
+    ...wd.map(w=>({title:"📲 Withdrawal "+w.status,amount:-Number(w.amount),time:w.created_at,status:w.status}))
+  ].sort((a,b)=>new Date(b.time)-new Date(a.time)).slice(0,30);
+  h.innerHTML=all.length?all.map(t=>`<div class="wallet-tx">
+    <span>${escapeWallet(t.title)}<br><small>${escapeWallet(String(t.time||""))}</small></span>
+    <span class="${t.amount>=0?'plus':'minus'}">${t.amount>=0?'+':''}₹${Math.abs(t.amount).toFixed(2)}${t.status?' · '+escapeWallet(t.status):''}</span>
+  </div>`).join(""):'<div class="wallet-note">No wallet transactions yet.</div>';
+}
+async function refreshWallet(){
+  try{
+    if(!walletToken){ updateWalletUI({balance:0,transactions:[],withdrawals:[]}); return; }
+    const data=await walletApi("/api/wallet");
+    walletUser=data.user;
+    updateWalletUI(data);
+  }catch(e){ walletMessage("Wallet server-এ connect করা যায়নি।"); }
+}
+async function openWallet(){
+  if(typeof closeMenuFinal==="function")closeMenuFinal();
+  const m=document.getElementById("walletModal"); if(m)m.classList.add("show");
+  await refreshWallet();
+}
+function closeWallet(e){
+  if(e&&e.target!==e.currentTarget)return;
+  const m=document.getElementById("walletModal"); if(m)m.classList.remove("show");
+}
+function menuWallet(){openWallet();}
+function escapeWallet(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+async function redeemGiftCode(){
+  const code=(document.getElementById("giftCodeInput")?.value||"").trim().toUpperCase();
+  if(!code)return walletMessage("Gift code দিন।");
+  try{
+    const data=await walletApi("/api/wallet/gift-code",{method:"POST",body:JSON.stringify({code})});
+    document.getElementById("giftCodeInput").value="";
+    updateWalletUI(data);
+    walletMessage("₹"+Number(data.credited).toFixed(2)+" wallet-এ যোগ হয়েছে।");
+  }catch(e){walletMessage(e.message);}
+}
+async function requestPhonePeWithdraw(){
+  const upi=(document.getElementById("phonePeUpi")?.value||"").trim();
+  const amount=Number(document.getElementById("withdrawAmount")?.value||0);
+  if(!upi||!upi.includes("@"))return walletMessage("সঠিক PhonePe UPI ID দিন।");
+  if(amount<10)return walletMessage("Minimum withdrawal ₹10।");
+  try{
+    const data=await walletApi("/api/withdrawals",{method:"POST",body:JSON.stringify({upi,amount})});
+    document.getElementById("withdrawAmount").value="";
+    updateWalletUI(data.wallet);
+    walletMessage(data.message);
+  }catch(e){walletMessage(e.message);}
+}
+function addReferralReward(){ walletMessage("Referral reward backend থেকে KYC verification-এর পর credit হবে।"); }
+window.creditReferralReward=addReferralReward;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeWallet();});
+refreshWallet();
+</script>
+
+<script id="auth-system-js">
+(function(){
+ const API=(localStorage.getItem('smartHomeApiBase')||'http://localhost:3000').replace(/\/$/,'');
+ const TOKEN_KEY='smartHomeWalletToken';
+ let pendingUser=null;
+ window.authMessage=function(msg){alert(msg)};
+ window.showAuth=function(name){
+   document.querySelectorAll('#authGate .auth-screen').forEach(x=>x.classList.remove('show'));
+   const el=document.getElementById('auth'+name.charAt(0).toUpperCase()+name.slice(1)); if(el)el.classList.add('show');
+   if(name==='signup'){
+     const r=new URLSearchParams(location.search).get('ref'); if(r)document.getElementById('signupReferral').value=r.toUpperCase();
+   }
+ };
+ window.logoutLocal=function(){localStorage.removeItem(TOKEN_KEY);document.body.classList.add('auth-locked');document.getElementById('authGate').classList.remove('hidden');showAuth('login')};
+ async function api(path,opts={}){const headers={'Content-Type':'application/json',...(localStorage.getItem(TOKEN_KEY)?{'Authorization':'Bearer '+localStorage.getItem(TOKEN_KEY)}:{})};const r=await fetch(API+path,{...opts,headers:{...headers,...(opts.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.message||'Server error');return d}
+ function err(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.classList.add('show')}}
+ function clear(id){const e=document.getElementById(id);if(e)e.classList.remove('show')}
+ let signupMobile='';
+ let otpTimer=null;
+ function startOtpTimer(seconds=60){
+   clearInterval(otpTimer); let left=seconds; const btn=document.getElementById('resendOtpBtn'),timer=document.getElementById('otpTimer');
+   if(btn)btn.disabled=true; if(timer)timer.textContent=' Resend in '+left+'s';
+   otpTimer=setInterval(()=>{left--;if(timer)timer.textContent=left>0?' Resend in '+left+'s':'';if(left<=0){clearInterval(otpTimer);if(btn)btn.disabled=false}},1000);
+ }
+ window.doSignup=async function(){
+   clear('signupError');
+   const name=document.getElementById('signupName').value.trim(),mobile=document.getElementById('signupMobile').value.trim(),email=document.getElementById('signupEmail').value.trim(),password=document.getElementById('signupPassword').value,referralCode=document.getElementById('signupReferral').value.trim();
+   if(!name)return err('signupError','Full Name দিন।');if(!/^[6-9]\d{9}$/.test(mobile))return err('signupError','সঠিক 10-digit mobile number দিন।');if(!/^\S+@\S+\.\S+$/.test(email))return err('signupError','সঠিক email দিন।');if(password.length<8)return err('signupError','Password minimum 8 characters হতে হবে।');
+   const b=document.getElementById('signupBtn');b.disabled=true;b.textContent='Sending OTP...';
+   try{
+     const d=await api('/api/auth/request-signup-otp',{method:'POST',body:JSON.stringify({name,mobile,email,password,referralCode})});
+     signupMobile=mobile; pendingUser={name,mobile,email}; document.getElementById('kycName').value=name;document.getElementById('kycMobile').value=mobile;
+     document.getElementById('otpError').classList.remove('show');document.querySelectorAll('.otp-input').forEach(x=>x.value='');showAuth('otp');startOtpTimer(60);document.querySelectorAll('.otp-input')[0].focus();
+   }catch(e){err('signupError',e.message+' (Backend: '+API+')')}finally{b.disabled=false;b.textContent='Sign Up'}
+ };
+ window.verifyOtp=async function(){
+   const code=[...document.querySelectorAll('.otp-input')].map(x=>x.value).join('');clear('otpError');
+   if(!signupMobile)return err('otpError','Signup session নেই। আবার Sign Up করুন।');if(!/^\d{6}$/.test(code))return err('otpError','6-digit OTP দিন।');
+   const b=document.querySelector('#authOtp .auth-btn');b.disabled=true;b.textContent='Verifying...';
+   try{const d=await api('/api/auth/verify-signup-otp',{method:'POST',body:JSON.stringify({mobile:signupMobile,otp:code})});localStorage.setItem(TOKEN_KEY,d.token);pendingUser=d.user;enterApp();}
+   catch(e){err('otpError',e.message)}finally{b.disabled=false;b.textContent='Verify OTP'}
+ };
+ window.resendOtp=async function(){
+   clear('otpError'); if(!signupMobile)return err('otpError','Signup session নেই। আবার Sign Up করুন।');
+   const b=document.getElementById('resendOtpBtn');b.disabled=true;
+   try{await api('/api/auth/resend-signup-otp',{method:'POST',body:JSON.stringify({mobile:signupMobile})});startOtpTimer(60);}
+   catch(e){err('otpError',e.message);b.disabled=false;}
+ };
+ window.submitKyc=async function(){clear('kycError');const name=document.getElementById('kycName').value.trim(),mobile=document.getElementById('kycMobile').value.trim();if(!name||!/^[6-9]\d{9}$/.test(mobile))return err('kycError','Name ও valid mobile দিন।');const b=document.getElementById('kycBtn');b.disabled=true;b.textContent='Submitting...';try{const d=await api('/api/kyc/submit',{method:'POST',body:JSON.stringify({name,mobile})});document.getElementById('kycSuccess').textContent='KYC submitted successfully. Status: '+d.user.kyc_status;document.getElementById('kycSuccess').classList.add('show');setTimeout(()=>showAuth('success'),700)}catch(e){err('kycError',e.message)}finally{b.disabled=false;b.textContent='Submit KYC'}};
+ window.doLogin=async function(){clear('loginError');const email=document.getElementById('loginEmail').value.trim(),password=document.getElementById('loginPassword').value;if(!email||!password)return err('loginError','Email ও password দিন।');const b=document.getElementById('loginBtn');b.disabled=true;b.textContent='Logging in...';try{const d=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email,password})});localStorage.setItem(TOKEN_KEY,d.token);pendingUser=d.user;showAuth('success')}catch(e){err('loginError',e.message)}finally{b.disabled=false;b.textContent='Login'}};
+ window.enterApp=async function(){document.getElementById('authGate').classList.add('hidden');document.body.classList.remove('auth-locked');try{if(typeof refreshWallet==='function')await refreshWallet()}catch(e){}};
+ function hydrate(){const token=localStorage.getItem(TOKEN_KEY);if(token){api('/api/me').then(d=>{pendingUser=d.user;document.getElementById('authGate').classList.add('hidden');document.body.classList.remove('auth-locked')}).catch(()=>{logoutLocal()})}else{document.body.classList.add('auth-locked');showAuth('signup')}}
+ document.addEventListener('DOMContentLoaded',()=>{
+   document.querySelectorAll('.otp-input').forEach((el,i,a)=>el.addEventListener('input',()=>{el.value=el.value.replace(/\D/g,'').slice(0,1);if(el.value&&a[i+1])a[i+1].focus()}));
+   setTimeout(()=>{if(localStorage.getItem(TOKEN_KEY))hydrate();else showAuth('signup')},1300);
+   const p=document.querySelector('.profile');if(p)p.addEventListener('click',()=>{if(typeof openProfileMenu==='function')openProfileMenu()});
+ });
+ window.smartHomeLogout=function(){logoutLocal();closeThreeDotMenu&&closeThreeDotMenu()};
+})();
+</script>
+</body>
+</html>
